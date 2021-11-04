@@ -32,7 +32,7 @@ prenom
 âge
 nombre de points de fidélité
 
-_Utilisateur occasionnel _(classe fille de Utilisateur)
+_Utilisateur occasionnel _ (classe fille de Utilisateur)
 
 _Utilisateur abonné_ (classe fille de Utilisateur):
 a une carte
