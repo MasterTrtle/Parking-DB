@@ -51,3 +51,38 @@ id
 montant
 mode paiement
 
+Abonnement : 
+
+ID (obligatoire) : clé 
+
+Date_debut (obligatoire)
+
+Date_fin (obligatoire) permet de determiner la date de fin d’abonnement et de l’exploiter dans l’application
+
+Carte :
+
+ID (obligatoire) : clé
+
+Compte :
+
+ID (obligatoire) : clé
+
+Le compte est l’association des classes abonnements, carte et abonné qui permet de lier les 3 informations dans une seule table pour simplifier les requêtes de l’application
+
+Caisse :
+
+ID (obligatoire) : clé
+
+Type_Caisse (obligatoire) : Réponds à la demande du sujet de connaitre le type de caisse sur lequel les utilisateurs payent et d’obtenir des statistiques
+
+Ticket : ID (obligatoire) : clé
+
+Date_début : permet de définir le prix de parking dans l’application
+
+Paiement :
+ID_transaction (obligatoire) : clé
+
+Prix : défini par l’application, permet de sortir des statistiques.
+
+La classe paiement est l’association des classes Carte, caisse et ticket et permet de suivre tous les paiements réalisés en caisse, que ce soit pour les abonnés ou les non-abonnés.
+
