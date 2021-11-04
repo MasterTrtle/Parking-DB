@@ -2,6 +2,7 @@
 - Emma Zglinicki
 - Alexandre Laval
 - Salomé Quoy
+- Florestan Biaux
 # Sujet : Gestion des parkings
 ## Contexte
 Une société de parkings souhaite mettre en place une base de données afin de gérer ses différents parkings dans une ville. Chaque parking est composé de plusieurs places, en plein air ou couvertes, adaptées à certains types de véhicules (deux_roues; camion; véhicule simple). Les prix des parkings varient selon la zone dans laquelle ils se situent dans la ville (Centre-ville, zone industrielle, zone d'activités commerciales, etc.).
