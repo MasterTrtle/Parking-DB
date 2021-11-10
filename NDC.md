@@ -30,7 +30,8 @@ Se compose d’un numéro de sécu social (unique not null)
 
 
 ## _Abonné :_
-Se compose date de naissance (not null), et d’un solde de fidélité (not null) qui permettra de lui calculer des avantages
+Se compose date de naissance (not null), et d’un solde de fidélité (not null) qui permettra de lui calculer des avantages. L'utilisateur occasionnel n'a pas besoin d'une classe puisqu'on n'a aucune info sur lui
+
 - il hérite du compte par référence
 - possède 0 ou plusieurs voitures
 - il souscrit à autant d'abonnements qu'il le souhaite, sachant qu'il s'agit d'un abonnement par zone 
@@ -51,13 +52,12 @@ Se compose d’un id_carte (unique not null), d’une date de début (not null) 
 - Il doit être acheté
 
 ## _Réservation :_
-Se compose d’un id (unique not null), d’une date de début (not null) et d’une date de fin (not null), et d’une fonction permettant de vérifier si la réservation est possible 
+Se compose d’un id (unique not null), d’une date de début (not null) et d’une date de fin (not null), et d’une fonction permettant de vérifier si la réservation est possible.
+Dans notre modélisation, un abonné peut réserver à l’avance afin d’être sûr qu’une place sera disponible pour lui et un occasionnel ne peut réserver une place que lorsqu’il se rend sur le parking pour prendre un ticket.
+
 -	Elle est associée au véhicule qui a réservé la place
 -	Elle est faite par un abonné
 -	Elle réserve une place en particulier
-
-Dans notre modélisation, un abonné peut réserver à l’avance afin d’être sûr qu’une place sera disponible pour lui et un occasionnel ne peut réserver une place que lorsqu’il se rend sur le parking pour prendre un ticket. 
-
 
 ## _Tickets :_   
 Se compose d'un id (unique et non null), varie en fonction du type de véhicules(non null), est lié à une date de début (non null) et une date de fin (quand l'utilisateur s'apprête à payer)(non null) avec date de fin > Date de début
