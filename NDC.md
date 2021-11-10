@@ -4,6 +4,9 @@ Pour les associations d'héritage : anticiper en quelques mots le types de trans
 Indiquer les utilisateurs de la BD avec leurs rôles
 Indiquer quelques requêtes types qu'on voudra faire dans la BD (celles indiqués sur le sujet et d'autres)
 
+
+un abonnement est lié àunz eone: on peut avoir autant d'abonnements que de zones
+
 ## _Parking :_ 
 est composé de 1 à N places
 correspond à une zone (qui elle même correspond à un prix)
