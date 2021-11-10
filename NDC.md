@@ -7,6 +7,8 @@ Indiquer quelques requêtes types qu'on voudra faire dans la BD (celles indiqué
 
 un abonnement est lié àunz eone: on peut avoir autant d'abonnements que de zones
 
+les occasionnels n'achètent que des tickets, on n'a pas plus d'infos que leur carte bleu
+
 ## _Parking :_ 
 est composé de 1 à N places
 correspond à une zone (qui elle même correspond à un prix)
