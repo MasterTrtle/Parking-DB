@@ -10,21 +10,19 @@ un abonnement est lié àunz eone: on peut avoir autant d'abonnements que de zon
 les occasionnels n'achètent que des tickets, on n'a pas plus d'infos que leur carte bleu
 
 ## _Parking :_ 
-est composé de 1 à N places
-correspond à une zone (qui elle même correspond à un prix)
+Se compose d'un nom (unique et non null), d'une adresse (unique et non null) et d'un nombre de place limite (non null)
+     est composé de 1 à N places
+    correspond à une zone (qui elle même correspond à un prix)
+    si on veut se garer, on doit prendre un ticket 
 
-## _Mode de paiements (mère):_ (classe association entre parking et utilisateur : change pour chaque parking que l’user a)
-
-## _Mode de paiement Occasionels:_ fille 1 (xor avec fille 2)
-tickets à l’heure guichet
-tickets à l’heure automate
-
-## _Mode de paiement Abonnés:_ fille2 (xor avec fille 1)
-carte mensuelle renouvelable chaque mois 
+## _Paiements :_
+Se compose d'un id de transaction (unique et non null), d'un montant (unique et non null)
+    peut se faire par Guichet ou par automate si on utilise tickets, ou par carte abonnement
 
 ## _Place:_
-plein air ou couvertes
-correspond a une véhicule
+Se compose d'un numéro (unique et non null), est adaptée à un type de véhicule, est d'un certain type (couverte ou plein air), peut être réservée ou non 
+    appartient à un parking
+    
 
 ## Utilisateur (classe mère abstraite)
   
