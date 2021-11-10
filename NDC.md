@@ -20,8 +20,8 @@
 
 ## _Compte :_
 
-Se compose d'un login (unique not null), d’un prenom (non null), d’un mot de passe(not null), d'un nom (not null) et d’une adresse mail (unique not null) 
-C'est une classe mère abstraite car elle ne représente rien de concret 
+Se compose d'un login (unique not null), d’un prenom (non null), d’un mot de passe(not null), d'un nom (not null) et d’une adresse mail (unique not null). 
+C'est une classe mère abstraite car elle ne représente rien de concret. 
 C’est la classe mère de employé et abonné, puisqu'ils ont besoin des attributs de Compte
 
 ## _Employé :_ 
@@ -39,7 +39,7 @@ L'utilisateur occasionnel n'a pas besoin d'une classe puisqu'on n'a aucune info 
 
 
 ## _Véhicule :_
-Se compose d'une immatriculation (unique not null), d'un type (not null): deux roues, camion, véhicule simple     
+Se compose d'une immatriculation (unique not null), d'un type (not null): deux roues, camion, véhicule simple.     
 Il est nécessaire de connaitre le type du véhicule pour lui attribuer une place adaptée dans le parking.
 -	Il peut être associé à une réservation
 -	Il appartient à un user
