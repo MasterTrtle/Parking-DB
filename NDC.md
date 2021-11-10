@@ -30,13 +30,12 @@ Se compose d’un numéro de sécu social (unique not null)
 
 
 ## _Abonné :_
-Se compose date de naissance (not null), et d’un solde de fidélité (not null) qui permettra de lui calculer des avantages. L'utilisateur occasionnel n'a pas besoin d'une classe puisqu'on n'a aucune info sur lui
+Se compose d'une date de naissance (not null), et d’un solde de fidélité (not null) qui permettra de lui calculer des avantages. L'utilisateur occasionnel n'a pas besoin d'une classe puisqu'on n'a aucune info sur lui
 
 - il hérite du compte par référence
 - possède 0 ou plusieurs voitures
 - il souscrit à autant d'abonnements qu'il le souhaite, sachant qu'il s'agit d'un abonnement par zone 
 - peut effectuer des réservations
-L'utilisateur occasionnel n'a pas besoin d'une classe puisqu'on n'a aucune info sur lui
 
 
 ## _Véhicule :_
@@ -62,7 +61,7 @@ Dans notre modélisation, un abonné peut réserver à l’avance afin d’être
 ## _Tickets :_   
 Se compose d'un id (unique et non null), varie en fonction du type de véhicules(non null), est lié à une date de début (non null) et une date de fin (quand l'utilisateur s'apprête à payer)(non null) avec date de fin > Date de début
 - peuvent être payés au guichet ou à l'automate
-- varie en fonction du parking (car pas le même prix selon zone du parking), un ticket permet d'accéder à un parking
+- varie en fonction du parking (car pas le même prix selon zone du parking), un ticket permet d'accéder à un parking d'une certaine zone
 - sont créés que si il reste de la place dans le parking
 
 ## _Paiements :_
@@ -77,13 +76,13 @@ Se compose d'un id (unique et non null), d'un type de caisse (guichet, automate)
 
 
 ## _Parking :_ 
-Se compose d'un id(unique et non null), d'une adresse (unique et non null), d'un nom(unique et non null) et d'une fonction permettant de connaître le nombre de place limite (non null) en fonction du type de véhicule, d’une fonction permettant de connaître le nombre de places restantes en fonction du type de véhicule
+Se compose d'un id(unique et non null), d'une adresse (unique et non null), d'un nom(unique et non null) et d'une fonction permettant de connaître le nombre de place limite et le nombre de places restantes en fonction du type de véhicule
 
 - correspond à une zone (qui elle même correspond à un prix)
-- si on veut se garer, on doit prendre un ticket 
+- si on veut se garer sans être abonnée, on doit prendre un ticket 
 
 ## _Place:_
-Se compose d'un numéro (unique et non null), est adaptée à un type de véhicule, est d'un certain type (couverte ou plein air), et possède une fonction avant de vérifier si elle est réservée ou non
+Se compose d'un numéro (unique et non null), est adaptée à un type de véhicule (non null), est d'un certain type (couverte ou plein air) (non null), et possède une fonction avant de vérifier si elle est réservée ou non
 - appartient à un parking, elle compose le parking 
 - peut être réservée ou non
 
