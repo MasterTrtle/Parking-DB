@@ -1,6 +1,6 @@
 # Note de Clarification
 
-## _UtilisatersBDD :_ 
+## _UtilisateursBDD :_ 
 -	Nouvel utilisateur pour se créer un abonnement (et donc un compte)
 -	Abonné pour gérer ses abonnements et réserver
 -	Société pour consulter ses stat et diverses informations 
