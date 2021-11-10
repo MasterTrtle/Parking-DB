@@ -20,7 +20,7 @@
 
 ## _Compte :_
 
-Se compose d'un login (unique not null), d’un prenom (non null), d’un mot de passe(not null)  d'un nom (not null), d’une adresse mail (unique not null) 
+Se compose d'un login (unique not null), d’un prenom (non null), d’un mot de passe(not null), d'un nom (not null) et d’une adresse mail (unique not null) 
 C'est une classe mère abstraite car elle ne représente rien de concret 
 C’est la classe mère de employé et abonné, puisqu'ils ont besoin des attributs de Compte
 
