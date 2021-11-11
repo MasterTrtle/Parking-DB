@@ -21,7 +21,7 @@ NDC:
 -	…
 
 
-## _Compte :_ (classe mère)_  
+## _Compte :_ (classe mère)  
 
 Se compose d'un login (unique not null), d’un mot de passe(not null), et d’une adresse mail (unique not null). 
 Un compte correspond soit à un abonné, soit à un employé
@@ -31,13 +31,13 @@ Se compose d’un numéro de sécu social (unique not null)
 - il correspond à un unique compte
 
 
-## _Abonné :_ (classe fille)_  
+## _Abonné :_ (classe fille)  
 Se compose d’un nom(not null), d’un prénom(not null), d'une date de naissance (not null), et d’un solde de fidélité (not null) qui permettra de lui calculer des avantages.
 
 - il hérite de client par référence
 - il souscrit à autant d'abonnements qu'il le souhaite, sachant qu'il s'agit d'un abonnement par zone 
 
-## _Occasionnel :_ (classe fille)_  
+## _Occasionnel :_ (classe fille)  
 Héritage complet de la classe client
 - il peut effectuer des réservations
 - si il souscrit à un abonnement il devient un abonné
@@ -66,18 +66,18 @@ Dans notre modélisation, un client peut réserver à l’avance afin d’être 
 -	Elle est faite par un client
 -	Elle réserve une place en particulier
 
-## _Paiements : (classe mère abstraite)_
+## _Paiements : (classe mère abstraite)
 Se compose d'un id de transaction (unique et non null), d'un montant (non null), d’un type de caisses (guichet, automate et internet)  et d'une fonction permettant de calculer le montant.
 Classe mère de ticket et abonnement.
 - Un paiement est effectuer par un client
 
-## _Abonnement :_ (classe fille)_  
+## _Abonnement :_ (classe fille)  
 Se compose d’un id_carte (unique not null), d’une date de début (not null) et d’une date de fin (not null) pour l’abonnement, et d’une fonction permettant de vérifier si l’abonnement est valide 
 - Il est souscrit par un abonné
 - Il est relié à une zone. Dans notre modélisation, un abonnement est relié à une zone. Il peut donc y avoir autant d’abonnements que de zones
 - Il est obtenu via un paiement
 
-## _Tickets :_ (classe fille)_   
+## _Tickets :_ (classe fille)   
 Se compose d'un id (unique et non null), varie en fonction du type de véhicules(non null), est lié à une date de début (non null) et une date de fin (quand le client s'apprête à payer)(non null) avec date de fin > Date de début
 - varie en fonction du parking (car pas le même prix selon zone du parking), un ticket permet d'accéder à un parking d'une certaine zone
 - Est effectué par un occasionnel ou un abonné ne possédant pas d’abonnement valide pour dans la zone du parking
