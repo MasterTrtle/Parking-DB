@@ -2,7 +2,7 @@ Compte(#login: string, mail:string, mdp:string, employe => Employe, abonne=> Abo
 
 Employé(#num_secu:int)
 
-Client(##id_client:int)
+Client(#id_client:int)
 
 Abonne(#id_client => Client, points_fidelite : int, nom:string, prenom:string, date_naiss:Date) avec nom, prenom, date_naiss NOT NULL    
 Occasionel (#id_client => Client)
