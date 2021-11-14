@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS zone CASCADE;
 DROP TABLE IF EXISTS parking CASCADE;
 DROP TABLE IF EXISTS place CASCADE;
 DROP TABLE IF EXISTS reservation CASCADE;
-DROP TABLE IF EXISTS employé CASCADE;
+DROP TABLE IF EXISTS employe CASCADE;
 DROP TABLE IF EXISTS occasionnel CASCADE;
 DROP TABLE IF EXISTS abonne CASCADE;
 DROP TABLE IF EXISTS compte CASCADE;
@@ -61,8 +61,7 @@ CREATE TABLE Place(
     type_vehicule type_vehicule not null,
     type_place type_place not null,
     primary key (id_parking,zone_parking,numero),
-    foreign key (id_parking) references parking(id_parking) on delete cascade,
-    foreign key (zone_parking) references parking(zone) on delete cascade
+    foreign key (id_parking,zone_parking) references parking(id_parking,zone) on delete cascade
 );
 
 CREATE TABLE Reservation(
@@ -76,12 +75,10 @@ CREATE TABLE Reservation(
     numero_place int not null,
     foreign key (vehicule) references vehicule(immat) on delete cascade,
     foreign key (client) references client(id_client) on delete cascade,
-    foreign key (parking_place) references place(id_parking) on delete cascade,
-    foreign key (zone_parking_place) references place(zone_parking) on delete cascade,
-    foreign key (numero_place) references place (numero) on delete cascade
+    foreign key (parking_place,zone_parking_place,numero_place) references place(id_parking,zone_parking,numero) on delete cascade
 );
 
-CREATE TABLE Employé(
+CREATE TABLE Employe(
     num_secu int primary key
 );
 
@@ -130,6 +127,5 @@ CREATE TABLE Ticket(
     zone_parking varchar(20) not null,
     id_parking int not null,
     foreign key (id_transaction) references paiement(id_transaction) on delete cascade,
-    foreign key (id_parking) references parking(id_parking) on delete cascade,
-    foreign key (zone_parking) references parking(zone) on delete cascade
-)
+    foreign key (id_parking,zone_parking) references parking(id_parking,zone) on delete cascade
+);
