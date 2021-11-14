@@ -21,7 +21,7 @@ CREATE TYPE type_place AS ENUM ('couverte', 'plein air');
 CREATE TYPE type_caisse AS ENUM ('guichet', 'automate', 'internet');
 
 CREATE TABLE Client(
-    id_client serial primary key,
+    id_client serial primary key
 );
 
 CREATE TABLE Vehicule(
@@ -42,16 +42,16 @@ CREATE TABLE Paiement(
 CREATE TABLE Zone(
     nom varchar(20) primary key,
     tarif_ticket int not null,
-    tarif_abonnement int not null,
+    tarif_abonnement int not null
 );
 
 CREATE TABLE Parking(
     id_parking serial,
     zone varchar(20),
-    nom varchar(20) key,
-    adresse varchar(100) key,
+    nom varchar(20) unique not null,
+    adresse varchar(100) unique not null,
     primary key (id_parking, zone),
-    foreign key zone references zone(nom) on delete cascade
+    foreign key (zone) references zone(nom) on delete cascade
 );
 
 CREATE TABLE Place(
@@ -61,8 +61,8 @@ CREATE TABLE Place(
     type_vehicule type_vehicule not null,
     type_place type_place not null,
     primary key (id_parking,zone_parking,numero),
-    foreign key id_parking references parking(id_parking) on delete cascade,
-    foreign key zone references parking(zone) on delete cascade
+    foreign key (id_parking) references parking(id_parking) on delete cascade,
+    foreign key (zone_parking) references parking(zone) on delete cascade
 );
 
 CREATE TABLE Reservation(
@@ -74,11 +74,11 @@ CREATE TABLE Reservation(
     parking_place int not null,
     zone_parking_place varchar(20) not null,
     numero_place int not null,
-    foreign key vehicule references vehicule(immat) on delete cascade,
-    foreign key client references client(id_client) on delete cascade,
-    foreign key parking_place references place(id_parking) on delete cascade,
-    foreign key zone_parking_place references place(zone_parking) on delete cascade,
-    foreign key numero_place references place (numero) on delete cascade
+    foreign key (vehicule) references vehicule(immat) on delete cascade,
+    foreign key (client) references client(id_client) on delete cascade,
+    foreign key (parking_place) references place(id_parking) on delete cascade,
+    foreign key (zone_parking_place) references place(zone_parking) on delete cascade,
+    foreign key (numero_place) references place (numero) on delete cascade
 );
 
 CREATE TABLE Employé(
@@ -105,32 +105,31 @@ CREATE TABLE Compte(
     mdp varchar(20) not null,
     employe int unique,
     abonne int unique,
-    foreign key employe references employe(num_secu) on delete cascade,
-    foreign key abonne references abonne(id_client) on delete cascade
+    foreign key (employe) references employe(num_secu) on delete cascade,
+    foreign key (abonne) references abonne(id_client) on delete cascade
 );
-
 
 CREATE TABLE Abonnement(
     id_transaction int primary key,
-    id_carte int key,
+    id_carte int unique not null,
     debut date not null,
     fin date not null,
     abonne int,
     zone varchar(20),
-    foreign key id_transaction references paiement(id_transaction) on delete cascade,
-    foreign key abonne references abonne(id_client) on delete cascade,
-    foreign key zone references zone(nom) on delete cascade
+    foreign key (id_transaction) references paiement(id_transaction) on delete cascade,
+    foreign key (abonne) references abonne(id_client) on delete cascade,
+    foreign key (zone) references zone(nom) on delete cascade
 );
 
 CREATE TABLE Ticket(
     id_transaction int primary key,
-    id_ticket int key,
+    id_ticket int unique not null,
     type_vehicule type_vehicule not null,
     debut date not null,
     fin date not null,
     zone_parking varchar(20) not null,
     id_parking int not null,
-    foreign key id_transaction references paiement(id_transaction) on delete cascade,
-    foreign key id_parking references parking(id_parking) on delete cascade,
-    foreign key zone_parking references parking(zone) on delete cascade
+    foreign key (id_transaction) references paiement(id_transaction) on delete cascade,
+    foreign key (id_parking) references parking(id_parking) on delete cascade,
+    foreign key (zone_parking) references parking(zone) on delete cascade
 )
