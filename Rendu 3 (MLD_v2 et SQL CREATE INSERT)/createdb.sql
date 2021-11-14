@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS zone CASCADE;
 DROP TABLE IF EXISTS parking CASCADE;
 DROP TABLE IF EXISTS place CASCADE;
 DROP TABLE IF EXISTS reservation CASCADE;
-DROP TABLE IF EXISTS employe CASCADE;
+DROP TABLE IF EXISTS employé CASCADE;
 DROP TABLE IF EXISTS occasionnel CASCADE;
 DROP TABLE IF EXISTS abonne CASCADE;
 DROP TABLE IF EXISTS compte CASCADE;
@@ -76,7 +76,7 @@ CREATE TABLE Reservation(
     foreign key (vehicule) references vehicule(immat) on delete cascade,
     foreign key (client) references client(id_client) on delete cascade,
     foreign key (parking_place,zone_parking_place,numero_place) references place(id_parking,zone_parking,numero) on delete cascade
-);
+); -- check client = vehicule.client / date ne se chevauchent pas / vehicule.type = place.type
 
 CREATE TABLE Employe(
     num_secu int primary key
@@ -104,7 +104,7 @@ CREATE TABLE Compte(
     abonne int unique,
     foreign key (employe) references employe(num_secu) on delete cascade,
     foreign key (abonne) references abonne(id_client) on delete cascade
-);
+); --check xor employé abonné
 
 CREATE TABLE Abonnement(
     id_transaction int primary key,
