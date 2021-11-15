@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS zone CASCADE;
 DROP TABLE IF EXISTS parking CASCADE;
 DROP TABLE IF EXISTS place CASCADE;
 DROP TABLE IF EXISTS reservation CASCADE;
-DROP TABLE IF EXISTS employé CASCADE;
+DROP TABLE IF EXISTS employe CASCADE;
 DROP TABLE IF EXISTS occasionnel CASCADE;
 DROP TABLE IF EXISTS abonne CASCADE;
 DROP TABLE IF EXISTS compte CASCADE;
@@ -103,8 +103,9 @@ CREATE TABLE Compte(
     employe int unique,
     abonne int unique,
     foreign key (employe) references employe(num_secu) on delete cascade,
-    foreign key (abonne) references abonne(id_client) on delete cascade
-); --check xor employé abonné
+    foreign key (abonne) references abonne(id_client) on delete cascade,
+    check ((employe IS NOT NULL and abonne is NULL) or (abonne is not null and employe is null))
+);
 
 CREATE TABLE Abonnement(
     id_transaction int primary key,
