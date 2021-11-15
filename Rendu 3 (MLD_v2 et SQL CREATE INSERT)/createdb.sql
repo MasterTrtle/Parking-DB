@@ -75,7 +75,7 @@ CREATE TABLE Reservation(
     numero_place int not null,
     foreign key (vehicule) references vehicule(immat) on delete cascade,
     foreign key (client) references client(id_client) on delete cascade,
-    foreign key (parking_place,zone_parking_place,numero_place) references place(id_parking,zone_parking,numero) on delete cascade,
+    foreign key (parking_place,zone_parking_place,numero_place) references place(id_parking,zone_parking,numero) on delete cascade
 ); -- check
    -- client = vehicule.client
    -- date ne se chevauchent pas
@@ -89,7 +89,7 @@ CREATE TABLE Employe(
 CREATE TABLE Occasionnel(
     id_client int primary key,
     foreign key (id_client) references client(id_client) on delete cascade
-)
+);
 
 CREATE TABLE Abonne(
     id_client int primary key,
