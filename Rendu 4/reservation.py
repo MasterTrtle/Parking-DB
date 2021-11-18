@@ -26,7 +26,7 @@ def est_Reserve(idPlace, idParking, debut, fin):
 def reserverPlace(debut, fin, idvehicule, client, idParking,zone, idPlace):
 
     if est_Reserve(idPlace, idParking,debut,fin):
-        print("reservation impossible, la place est déjà réservé")
+        print("reservation impossible, la place est déjà réservée")
     else:
         debut = debut.strftime('%Y-%m-%d %H:%M:%S')
         fin = fin.strftime('%Y-%m-%d %H:%M:%S')
