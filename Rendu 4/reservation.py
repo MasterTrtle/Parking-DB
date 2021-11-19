@@ -54,7 +54,7 @@ def reserver_place(cur,client):
     parking = selectionnerParking(cur)
     idParking = parking[0]
     zone = parking[1]
-    sql ="SELECT p.idplace FROM Place a JOIN parking b ON a.id_parkiNG = b.id_parking AND p.type_vehicule =%s;"%typevehicule
+    sql ="SELECT a.idplace FROM Place a JOIN parking b ON a.id_parking = b.id_parking AND a.type_vehicule =%s;"%typevehicule
     cur.execute(sql)
     idPlace=cur.fetchone()
     while not est_Reserve(cur,idPlace, idParking, debut, fin,typevehicule):
