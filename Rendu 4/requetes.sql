@@ -2,7 +2,7 @@
 SELECT r.debut, r.fin FROM Reservation r JOIN place p ON r.numero_place=p.numero AND  r.parking_place = p.id_parking WHERE p.id_parking = idParking AND p.numero = idPlace;
 
 --récuperer l'ensemble des places d'un type précis dans un parking cible
-SELECT p.idplace FROM Place a JOIN parking b ON a.id_parkiNG = b.id_parking AND p.type_vehicule ="cible";
+"SELECT a.idplace FROM Place a JOIN parking b ON a.id_parkiNG = b.id_parking AND a.type_vehicule ="cible";
 
 -- on effectue une réservation (debut, fin, idvehicule, client, idParking,zone, idPlace seront passés en paramètre)
 INSERT into Reservation values (debut, fin, idvehicule, client, idParking, zone, idPlace);
