@@ -1,5 +1,5 @@
 -- on on récupère l'ensemble des reservation (idPlace, idParking, debut, fin seront placés en paramètre)
-SELECT r.debut, r.fin FROM Reservation r, place p ON r.numero_place=p.numero AND  r.parking_place = p.id_parking WHERE p.id_parking = idParking AND p.numero = idPlace
+SELECT r.debut, r.fin FROM Reservation r, place p ON r.numero_place=p.numero AND  r.parking_place = p.id_parking WHERE p.id_parking = idParking AND p.numero = idPlace;
 
 -- on effectue une réservation (debut, fin, idvehicule, client, idParking,zone, idPlace seront passés en paramètre)
 INSERT into Reservation values (debut, fin, idvehicule, client, idParking, zone, idPlace);
