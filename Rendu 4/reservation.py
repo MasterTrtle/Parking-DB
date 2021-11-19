@@ -5,7 +5,7 @@ import connect
 
 def est_Reserve(idPlace, idParking, debut, fin):
     #on on récupère l'ensemble des reservation
-    sql = "SELECT r.debut, r.fin FROM Reservation r, place p ON r.numero_place=p.numero AND  r.parking_place = p.id_parking WHERE p.id_parking = %d AND p.numero = %d "%idPlace,idParking
+    sql = "SELECT r.debut, r.fin FROM Reservation r, place p ON r.numero_place=p.numero AND  r.parking_place = p.id_parking WHERE p.id_parking = %d AND p.numero = %d "%idParking,idPlace 
     #a voir si on trie pour optimiser
     conn = connect.get_connection()
     allReservation = conn.cursor()
