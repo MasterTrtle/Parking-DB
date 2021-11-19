@@ -76,7 +76,8 @@ CREATE TABLE Reservation(
     foreign key (vehicule) references vehicule(immat) on delete cascade,
     foreign key (client) references client(id_client) on delete cascade,
     foreign key (parking_place,zone_parking_place,numero_place) references place(id_parking,zone_parking,numero) on delete cascade
-); -- check
+    Check (DATEDIFF(debut, fin)>0)
+); -- check (DATEDIFF(day or hour, debut, fin) > 0) si pas Mysql
    -- client = vehicule.client
    -- date ne se chevauchent pas
    -- vehicule.type = place.type
@@ -98,7 +99,8 @@ CREATE TABLE Abonne(
     prenom varchar(20) not null,
     date_naiss date not null,
     foreign key (id_client) references client(id_client) on delete cascade
-);
+    Check (DATEDIFF(year, date_naiss, NOW())>18)
+    );
 
 CREATE TABLE Compte(
     login varchar(20) primary key,
@@ -121,7 +123,8 @@ CREATE TABLE Abonnement(
     foreign key (id_transaction) references paiement(id_transaction) on delete cascade,
     foreign key (abonne) references abonne(id_client) on delete cascade,
     foreign key (zone) references zone(nom) on delete cascade
-);
+    Check (DATEDIFF(debut, fin)>0)
+  ); -- check (DATEDIFF(month, debut, fin) > 0) si pas Mysql
 
 CREATE TABLE Ticket(
     id_transaction int primary key,
@@ -133,4 +136,5 @@ CREATE TABLE Ticket(
     id_parking int not null,
     foreign key (id_transaction) references paiement(id_transaction) on delete cascade,
     foreign key (id_parking,zone_parking) references parking(id_parking,zone) on delete cascade
-);
+    Check (DATEDIFF(debut, fin)>0)
+    ); -- check (DATEDIFF(day or hour, debut, fin) > 0) si pas Mysql
