@@ -4,6 +4,9 @@ SELECT r.debut, r.fin FROM Reservation r, place p ON r.numero_place=p.numero AND
 -- on effectue une réservation (debut, fin, idvehicule, client, idParking,zone, idPlace seront passés en paramètre)
 INSERT into Reservation values (debut, fin, idvehicule, client, idParking, zone, idPlace);
 
+-- récupérer l'ensemble des véhicules d'un client
+SELECT v.immat v.type_vehicule FROM Vehicule v JOIN Client c ON v.propietaire = c.id_client;
+
 -- consulter son solde de fidélité (idabonne sera passé en paramètre)
 SELECT points_fidelite FROM Abonne WHERE id_client = idabonne;
 
