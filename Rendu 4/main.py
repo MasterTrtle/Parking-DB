@@ -15,8 +15,9 @@ if __name__ == '__main__':
     print("   2. Se créer un compte")
     choix1 = int(input())
     if choix1 == 1:
-        retour = "false"
-        while retour == "false":
+        # connexion
+        loop = "true"
+        while loop == "true":
             login = input("Quel est votre login ?")
             sql = "select login from compte"
             cur.execute(sql)
@@ -45,16 +46,59 @@ if __name__ == '__main__':
                 print("Login inconnu\nVeuillez vous reconnecter")
 
     else:
-        login = input("Quel login voulez-vous ?")
-        # check si le login n'est pas déjà pris
-        password = input("Saisissez votre mot de passe")
-        mail = input("Quelle est votre adresse mail ?")
-        employe = bool(input("Êtes-vous employé ?\n 0-Oui\n 1-Non"))
-        if employe:
-            secu = int(input("Quel est votre numero de sécurité sociale"))
-            print("employe")
-            # check si l'employé existe sinon refus
-        else:
-            client = int(input("Quel est votre identifiant client ?"))
-            print("client")
-            # check si c'est un abonné
+        #creer un compte
+        loop = "true"
+        while loop == "true":
+            login = input("Quel login voulez-vous ?")
+            sql = "select login from compte"
+            cur.execute(sql)
+            raw = cur.fetchone()
+            login_valide = 1
+            while raw:
+                if raw[0] == login:
+                    login_valide = 0
+                raw = cur.fetchone()
+            if login_valide:
+                password = input("Saisissez votre mot de passe")
+                mail = input("Quelle est votre adresse mail ?")
+                employe = int(input("Êtes-vous employé ?\n 0-Oui\n 1-Non"))
+                if employe == 0:
+                    #employe
+                    secu = int(input("Quel est votre numero de sécurité sociale"))
+                    sql = "select * from employe"
+                    cur.execute(sql)
+                    raw = cur.fetchone()
+                    employe = 0
+                    while raw:
+                        if int(raw[0]) == secu:
+                            employe = 1
+                        raw = cur.fetchone()
+                    if employe == 1:
+                        sql = "insert into Compte values('%s','%s','%s','%s',NULL)" % (login, mail, password, secu)
+                        cur.execute(sql)
+                        cur.commit()
+                        print("Compte créé")
+                        loop = "false"
+                    else:
+                        print("Le numero ne correspond pas à un employé\nMerci de rééssayer")
+                else:
+                    #client
+                    num = int(input("Quel est votre identifiant client ?"))
+                    sql = "select * from client"
+                    cur.execute(sql)
+                    raw = cur.fetchone()
+                    client = 0
+                    while raw:
+                        if int(raw[0]) == num:
+                            client = 1
+                        raw = cur.fetchone()
+                    if client:
+                        sql = "insert into Compte values('%s','%s','%s', NULL,'%s')" % (login, mail, password, num)
+                        cur.execute(sql)
+                        # cur.commit() -- C KC
+                        print("Compte créé")
+                        loop = "false"
+                    else:
+                        print("Le numero ne correspond pas à un client\nMerci de rééssayer")
+            else:
+                print("Login déjà utilisé\nMerci de ressaisir un nouveau login")
