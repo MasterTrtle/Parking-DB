@@ -1,6 +1,6 @@
-def est_Reserve(cur,idPlace, idParking, debut, fin,type):
+def est_Reserve(cur,idPlace, idParking, debut, fin,typevehicule):
     #on on récupère l'ensemble des reservations
-    sql = "SELECT r.debut, r.fin FROM Reservation r, place p ON r.numero_place=p.numero AND  r.parking_place = p.id_parking WHERE p.id_parking = %d AND p.numero = %d AND p.type_vehicule =%s "%idParking,idPlace,type
+    sql = "SELECT r.debut, r.fin FROM Reservation r, place p ON r.numero_place=p.numero AND  r.parking_place = p.id_parking WHERE p.id_parking = %d AND p.numero = %d AND p.type_vehicule =%s "%idParking,idPlace,typevehicule
     #a voir si on trie pour optimiser
     cur.execute(sql)
     reservation = cur.fetchone()
