@@ -10,6 +10,7 @@ INSERT into Client values ('8');
 INSERT into Client values ('9');
 INSERT into Client values ('10');
 INSERT into Client values ('11');
+insert into client values ('42');
 
 
 
@@ -27,6 +28,7 @@ insert into abonne values('5','4','Janvier','Elise','1988-09-10');
 insert into abonne values('6','0','Vian','Boris','1967-07-07');
 insert into abonne values('7','30','Holmes','Sherlock','1994-10-18');
 insert into abonne values('8','17','Vivet','Lucie','1985-02-05');
+insert into abonne values('42','0','Biaux','Florestan','2000-03-26');
 
 INSERT into Vehicule values ('111','vehicule simple','0');
 INSERT into Vehicule values ('112','camion','8');
@@ -87,11 +89,11 @@ Insert into Paiement values('11', '6', 'automate','10');
 
 
 
-insert into Employe values ('1000359');
-insert into Employe values ('2548720');
-insert into Employe values ('7145986');
-insert into Employe values ('2403210');
-insert into Employe values ('7102503');
+insert into employe values ('1000359');
+insert into employe values ('2548720');
+insert into employe values ('7145986');
+insert into employe values ('2403210');
+insert into employe values ('7102503');
 
 insert into reservation values ('1','2021-11-15','2021-11-16','111','1','1','Centre-ville','2');
 
