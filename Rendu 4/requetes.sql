@@ -2,7 +2,7 @@
 SELECT r.debut, r.fin FROM Reservation r JOIN place p ON r.numero_place=p.numero AND  r.parking_place = p.id_parking WHERE p.id_parking = idParking AND p.numero = idPlace;
 
 --récuperer l'ensemble des places d'un type précis dans un parking cible
-"SELECT a.idplace FROM Place a JOIN parking b ON a.id_parkiNG = b.id_parking AND a.type_vehicule ="cible";
+SELECT a.idplace FROM Place a JOIN parking b ON a.id_parkiNG = b.id_parking AND a.type_vehicule ="cible";
 
 -- on effectue une réservation (debut, fin, idvehicule, client, idParking,zone, idPlace seront passés en paramètre)
 INSERT into Reservation values (debut, fin, idvehicule, client, idParking, zone, idPlace);
@@ -22,9 +22,11 @@ SELECT zone, Count(id_carte) FROM Abonnement GROUP BY zone;
 --voir le nombre de parkings par zone
 SELECT zone, Count(id_parking) FROM Parking GROUP BY zone;
 
-
 -- récupérer toute les zones
 SELECT * FROM Zone ORDER BY nom;
+
+-- récupérer tous les parkings
+SELECT * FROM Parking ORDER BY zone;
 
 -- mettre à jour le tarif abonnements d'une zone (nouveau_tarif_A et nom_zone_choisie seront passés en paramètre)
 UPDATE Zone SET tarif_abonnement= nouveau_tarif_A WHERE nom=nom_zone_choisie;
@@ -32,5 +34,8 @@ UPDATE Zone SET tarif_abonnement= nouveau_tarif_A WHERE nom=nom_zone_choisie;
 -- mettre à jour le tarif tickets d'une zone (nouveau_tarif_T et nom_zone_choisie seront passés en paramètre)
 UPDATE Zone SET tarif_ticket=nouveau_tarif_T WHERE nom=nom_zone_choisie;
 
--- mettre à jour les tarif tickets et abonnements d'une zone (nouveau_tarif_T, nouveau_tarif_A et nom_zone_choisie seront passés en paramètre)
+-- mettre à jour les tarifs tickets et abonnements d'une zone (nouveau_tarif_T, nouveau_tarif_A et nom_zone_choisie seront passés en paramètre)
 UPDATE Zone SET tarif_abonnement=nouveau_tarif_A, tarif_ticket=nouveau_tarif_T WHERE nom=nom_zone_choisie;
+
+-- mettre à jour la zone d'un parking (nouvelle_zone et parking_choisi seront passés en paramètres)
+UPDATE Parking SET zone=nouvelle_zone WHERE nom=parking_choisi;
