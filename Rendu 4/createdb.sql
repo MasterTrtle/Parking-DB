@@ -75,8 +75,8 @@ CREATE TABLE Reservation(
     numero_place int not null,
     foreign key (vehicule) references vehicule(immat) on delete cascade,
     foreign key (client) references client(id_client) on delete cascade,
-    foreign key (parking_place,zone_parking_place,numero_place) references place(id_parking,zone_parking,numero) on delete cascade
-    Check (DATEDIFF(debut, fin)>0)
+    foreign key (parking_place,zone_parking_place,numero_place) references place(id_parking,zone_parking,numero) on delete cascade,
+    check (date_part('day', fin::timestamp)-date_part('day',debut::timestamp)>0 OR date_part('hour',fin::timestamp) - date_part('hour',debut::timestamp)>0)
 ); -- check (DATEDIFF(day or hour, debut, fin) > 0) si pas Mysql
    -- client = vehicule.client
    -- date ne se chevauchent pas
@@ -98,8 +98,8 @@ CREATE TABLE Abonne(
     nom varchar(20) not null,
     prenom varchar(20) not null,
     date_naiss date not null,
-    foreign key (id_client) references client(id_client) on delete cascade
-    Check (DATEDIFF(year, date_naiss, NOW())>18)
+    foreign key (id_client) references client(id_client) on delete cascade,
+    check ((date_part('year', NOW()::timestamp )-date_part('year', date_naiss::timestamp ))>18)
     );
 
 CREATE TABLE Compte(
@@ -122,8 +122,8 @@ CREATE TABLE Abonnement(
     zone varchar(20),
     foreign key (id_transaction) references paiement(id_transaction) on delete cascade,
     foreign key (abonne) references abonne(id_client) on delete cascade,
-    foreign key (zone) references zone(nom) on delete cascade
-    Check (DATEDIFF(debut, fin)>0)
+    foreign key (zone) references zone(nom) on delete cascade,
+    check (date_part('month', fin::timestamp )-date_part('month',debut::timestamp )>0)
   ); -- check (DATEDIFF(month, debut, fin) > 0) si pas Mysql
 
 CREATE TABLE Ticket(
@@ -135,6 +135,6 @@ CREATE TABLE Ticket(
     zone_parking varchar(20) not null,
     id_parking int not null,
     foreign key (id_transaction) references paiement(id_transaction) on delete cascade,
-    foreign key (id_parking,zone_parking) references parking(id_parking,zone) on delete cascade
-    Check (DATEDIFF(debut, fin)>0)
+    foreign key (id_parking,zone_parking) references parking(id_parking,zone) on delete cascade,
+    check (date_part('day', fin::timestamp) - date_part('day',debut::timestamp)>0 OR date_part('hour',fin::timestamp) - date_part('hour',debut::timestamp)>0)
     ); -- check (DATEDIFF(day or hour, debut, fin) > 0) si pas Mysql
