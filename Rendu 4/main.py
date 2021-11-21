@@ -1,4 +1,5 @@
 import connect
+import menu
 
 if __name__ == '__main__':
     conn = connect.get_connection()
@@ -29,10 +30,12 @@ if __name__ == '__main__':
                 if raw[0] == password:
                     if raw[1]:
                         employe = 1
-                        print("employe")
+                        loop="false"
+                        menu.menu_employe(cur,conn,login)
                     else:
                         employe = 0
-                        print("client")
+                        loop="false"
+                        menu.menu_client(cur,conn,login)
                 else:
                     print("Mauvais mot de passe\nVeuillez vous reconnecter\n")
                     # retour menu

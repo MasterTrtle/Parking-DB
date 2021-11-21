@@ -1,5 +1,3 @@
-import psycopg2
-
 def afficher_zones(cur) :
     sql="SELECT * FROM Zone ORDER BY nom;"
     cur.execute(sql)
@@ -18,7 +16,7 @@ def afficher_parkings(cur) :
         print(f'[{row[0]:>3d}] {row[2]:10s} {row[1]:15s} {row[3]:10s}')
         row=cur.fetchone()        
     
-def changer_tarif_zone(cur):
+def changer_tarif_zone(cur,conn):
     print("\n--- Modifier le tarif d'une zone---")
     
     #Afficher l'état actuel de la table zone
@@ -41,12 +39,14 @@ def changer_tarif_zone(cur):
             tarif_abo=input("Entrez la nouvelle valeur du tarif abonnement :")
             sql= "UPDATE Zone SET tarif_abonnement='%s' WHERE nom='%s';"%(tarif_abo,zone)
             cur.execute(sql)
+            conn.commit()
             return
         
         elif choix=='2' :
             tarif_ticket=input("Entrez la nouvelle valeur du tarif ticket :")
             sql= "UPDATE Zone SET tarif_ticket='%s' WHERE nom='%s';"%(tarif_ticket,zone)
             cur.execute(sql)
+            conn.commit()
             return
         
         elif choix=='3' :
@@ -54,12 +54,13 @@ def changer_tarif_zone(cur):
             tarif_ticket=input("Entrez la nouvelle valeur du tarif ticket :")
             sql= "UPDATE Zone SET tarif_abonnement='%s',tarif_ticket='%s' WHERE nom='%s';"%(tarif_abo,tarif_ticket,zone)
             cur.execute(sql)
+            conn.commit()
             return
         
         elif choix=='4' :
             return
     
-def changer_zone_parking(cur):
+def changer_zone_parking(cur,conn):
     print("\n--- Modifier la zone d'un parking---")
     
     #Afficher l'état actuel de la table parking
@@ -74,33 +75,7 @@ def changer_zone_parking(cur):
     zone=input("Entrez le nom de la zone dans laquelle vous souhaitez transférer le parking : ")
     sql= "UPDATE Parking SET zone='%s' WHERE nom='%s';"%(zone,parking)
     cur.execute(sql)
+    conn.commit()
     return
     
-def zone_menu(cur):
-    choix=0
-    while (choix!=1 and choix!=2 and choix!=3):
-        print("\n--- Paramétrage de zones---")
-        print("[1] - Changer un parking de zone")
-        print("[2] - Changer le tarif d'une zone")
-        print("[3] - Terminer")
-        choix=input("Entrez votre choix : ")
-        if choix=='1' :
-            changer_zone_parking(cur)
-        elif choix=='2' :
-            changer_tarif_zone(cur)
-        elif choix=='3' :
-            return
-
-if __name__ == "__main__":
-    HOST = "tuxa.sme.utc"
-    USER = "nf18a060"
-    PASSWORD = "hLXrO3No"
-    DATABASE = "dbnf18a060"
-
-    conn = psycopg2.connect("host=%s dbname=%s user=%s password=%s" % (HOST, DATABASE, USER, PASSWORD))
-
-    cur=conn.cursor()
-    zone_menu(cur)
-    conn.commit()
-    conn.close()
     
