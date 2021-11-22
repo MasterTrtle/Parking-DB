@@ -39,7 +39,7 @@ INSERT into Vehicule values ('118','deux roues','6');
 INSERT into Vehicule values ('451','vehicule simple','3');
 INSERT into Vehicule values ('852','camion','4');
 INSERT into Vehicule values ('902','deux roues','7');
-INSERT into Vehicule values ('118','vehicule simple','11');
+INSERT into Vehicule values ('119','vehicule simple','11');
 INSERT into Vehicule values ('415','deux roues','10');
 
 INSERT into zone values ('Centre-ville','2','15');
