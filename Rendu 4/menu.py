@@ -1,4 +1,5 @@
 import zone
+import reservation
 
 def menu_employe(cur,conn,login):
     print("---Bienvenue dans l'espace employé---")
@@ -27,13 +28,13 @@ def menu_client(cur,conn,login):
     loop='true'
     while (loop=='true'):
         print("Que voulez-vous faire?")
-        print("[1] - ")
+        print("[1] - Reserver une place ")
         print("[2] - ")
         print("[3] - Terminer")
         choix=input("Entrez votre choix : ")
         if choix=='1' :
             loop='false'
-            #fonction
+            reservation.reserver_place(cur,login)
             loop='true'
         elif choix=='2' :
             loop='false'
