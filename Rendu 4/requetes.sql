@@ -13,6 +13,9 @@ SELECT v.immat, v.type_vehicule FROM Vehicule v JOIN Client c ON v.propriétaire
 --selectioner un parking en fonction de son nom
 SELECT * FROM PARKING WHERE nom = "cible";
 
+--selectionner récupérer les dates et zones des abonnements d'un client "cible"
+SELECT a.zone, a.debut, a.fin FROM abonnement a WHERE a.abonne = "cible";
+
 -- consulter son solde de fidélité (idabonne sera passé en paramètre)
 SELECT points_fidelite FROM Abonne WHERE id_client = idabonne;
 
