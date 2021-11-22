@@ -8,7 +8,7 @@ SELECT a.idplace FROM Place a JOIN parking b ON a.id_parkiNG = b.id_parking AND 
 INSERT into Reservation values (debut, fin, idvehicule, client, idParking, zone, idPlace);
 
 -- récupérer l'ensemble des véhicules d'un client
-SELECT v.immat v.type_vehicule FROM Vehicule v JOIN Client c ON v.propietaire = c.id_client;
+SELECT v.immat, v.type_vehicule FROM Vehicule v JOIN Client c ON v.propriétaire = c.id_client;
 
 --selectioner un parking en fonction de son nom
 SELECT * FROM PARKING WHERE nom = "cible";
