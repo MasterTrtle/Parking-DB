@@ -53,7 +53,7 @@ def reserver_place_cible(cur, debut, fin, idvehicule, client, idParking, zone, i
 
 
 def check_abonnement_valide(cur, client, zone, debut, fin):
-    sql = "SELECT a.zone, a.debut, a.fin FROM abonnement a JOIN client c On a.abonne=c.id_client "
+    sql = "SELECT a.zone, a.debut, a.fin FROM abonnement a WHERE a.abonne='%s';"%client
     flag = False
     x = cur.fetchone()
     while x:
