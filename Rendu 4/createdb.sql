@@ -122,8 +122,8 @@ CREATE TABLE Abonnement(
     zone varchar(20),
     foreign key (id_transaction) references paiement(id_transaction) on delete cascade,
     foreign key (abonne) references abonne(id_client) on delete cascade,
-    foreign key (zone) references zone(nom) on delete cascade,
-    check (date_part('month', fin::timestamp )-date_part('month',debut::timestamp )>0)
+    foreign key (zone) references zone(nom) on delete cascade
+    --check (date_part('month', fin::timestamp )-date_part('month',debut::timestamp )>0)
   ); -- check (DATEDIFF(month, debut, fin) > 0) si pas Mysql
 
 CREATE TABLE Ticket(
