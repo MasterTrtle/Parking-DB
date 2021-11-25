@@ -86,7 +86,8 @@ CREATE TABLE Reservation(
    -- => A faire dans l'applicatif car necessite des subqueries
 
 CREATE TABLE Employe(
-    num_secu int primary key
+    id_employe serial primary key,
+    num_secu int unique not null
 );
 
 CREATE TABLE Occasionnel(
@@ -110,7 +111,7 @@ CREATE TABLE Compte(
     mdp varchar(20) not null,
     employe int unique,
     abonne int unique,
-    foreign key (employe) references employe(num_secu) on delete cascade,
+    foreign key (employe) references employe(id_employe) on delete cascade,
     foreign key (abonne) references abonne(id_client) on delete cascade,
     check ((employe IS NOT NULL and abonne is NULL) or (abonne is not null and employe is null))
 );
