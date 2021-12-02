@@ -6,6 +6,7 @@ if __name__ == '__main__':
     conn = connect.get_connection()
     cur = conn.cursor()
     cur.execute(open("createdb.sql", "r").read())
+    conn.commit()
 
     generation.remplir_bdd(cur)
     conn.commit()
@@ -36,11 +37,11 @@ if __name__ == '__main__':
                     if raw[1]:
                         employe = 1
                         loop="false"
-                        menu.menu_employe(cur,conn,login)
+                        menu.menu_employe(cur,login)
                     else:
                         employe = 0
                         loop="false"
-                        menu.menu_client(cur,conn,login)
+                        menu.menu_client(cur,login)
                 else:
                     print("Mauvais mot de passe\nVeuillez vous reconnecter\n")
                     # retour menu
