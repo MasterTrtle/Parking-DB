@@ -1,6 +1,10 @@
-def est_Reserve(cur, idPlace, idParking, debut, fin, typevehicule):
+import abonnement
+import menu
+
+
+def est_Reserve(cur, idPlace, idParking, debut, fin):
     # on on récupère l'ensemble des reservations(leur date) d'une place cible dans un parking'
-    sql = f"SELECT r.debut, r.fin FROM Reservation r, place p ON r.numero_place=p.numero AND  r.parking_place = p.id_parking WHERE p.id_parking = {idParking} AND p.numero = {idPlace} AND p.type_vehicule ={typevehicule} "
+    sql = f"SELECT r.debut, r.fin FROM Reservation r, place p ON r.numero_place=p.numero AND  r.parking_place = p.id_parking WHERE p.id_parking = {idParking} AND p.numero = {idPlace}"
     cur.execute(sql)
     reservation = cur.fetchone()
     flag = False
@@ -27,17 +31,17 @@ def select_place(cur, id_parking, type_place, type_vehicule):
 def vehicule_disponible(cur, inmat, debut, fin): #renvoie bool qui indique dispo d un vehicule
     sql = "select r.debut, r.fin from reservation r where vehicule = {inmat};"
     cur.execute(sql)
-    flag = true
+    flag = True
     raw = cur.fetchone()
     while raw:
-        if (not (reservation[1] <= debut or fin <= reservation[0])):
-            flag = false
+        if (not (raw[1] <= debut or fin <= raw[0])):
+            flag = False
             break
         raw = cur.fetchone
     return flag
 
-def selectionnerVehicule(cur,debut,fin):
-    sql = "SELECT v.immat, v.type_vehicule FROM Vehicule v JOIN Client c ON v.propriétaire = c.id_client;"
+def selectionnerVehicule(cur,debut,fin,client):
+    sql = f"SELECT v.immat, v.type_vehicule FROM Vehicule v  where v.propriétaire = {client};"
     cur.execute(sql)
     vehicule = cur.fetchone()
     i = 0
@@ -52,7 +56,7 @@ def selectionnerVehicule(cur,debut,fin):
     while i < int(choix):
         i += 1
         vehicule = cur.fetchone()
-    if vehicule_disponible(cur, inmat, debut, fin):
+    if vehicule_disponible(cur, vehicule[0], debut, fin):
         return vehicule
     else:
         print(f"le vehicule {vehicule} n'est pas disponible, \n entrez [1] pour choisir un autre véhicule, \n entrez une autre touche pour quitter le menu de reservation")
@@ -60,7 +64,7 @@ def selectionnerVehicule(cur,debut,fin):
         if choix == 1:
             selectionnerVehicule(cur, debut, fin)
         else:
-            menu_client(cur, conn, login)
+            menu.menu_client(cur, client)
 
 
 
@@ -95,32 +99,38 @@ def check_abonnement_valide(cur, client, zone, debut, fin):
     return flag
 
 
-def reserver_place_abo(cur, client,debut,fin,inmat,idParking):
+def reserver_place_abo(cur, client,debut,fin,inmat,idParking,typevehicule, typePlace):
     print('vous etes abonne a cette zone, la reservation est gratuite')
 
-    sql = f"SELECT a.numero FROM Place a JOIN parking b ON a.id_parking = b.id_parking AND a.type_vehicule ={typevehicule};"
+    sql = f"SELECT a.numero FROM Place a JOIN parking b ON a.id_parking = b.id_parking AND a.type_vehicule ={typevehicule} AND type_place ={typePlace};"
     cur.execute(sql)
     idPlace = cur.fetchone()
-    while not est_Reserve(cur, idPlace, idParking, debut, fin, typevehicule):
+    while not est_Reserve(cur, idPlace, idParking, debut, fin) and idPlace:
         idPlace = cur.fetchone()
     reserver_place_cible(cur, debut, fin, inmat, client, idParking, idPlace)
-
-
-
-
 
 def reserver_place(cur, client):
     type_caisse = 'internet'
     debut = input("entrez debut")
     fin = input("entrez fin")
-    vehicule = selectionnerVehicule(cur,debut,fin)
+    vehicule = selectionnerVehicule(cur,debut,fin,client)
     inmat = vehicule[0]
     typevehicule = vehicule[1]
+    type_place =["couverte', 'plein air couverte', 'plein air"]
+    print("Choississez le type de place")
+    print("[1] - Place couverte")
+    print("[2] - Place plein air couverte")
+    print("[3] - plein air")
+    choix_place =int(input())
+    type_place=type_place[choix_place]
+
+
+
     parking = selectionnerParking(cur)
     idParking = parking[0]
     zone = parking[1]
     if check_abonnement_valide:
-        reserver_place_abo(cur, client,debut,fin,inmat,idParking)
+        reserver_place_abo(cur, client,debut,fin,inmat,idParking,typevehicule,type_place)
     else:
         print("vous n'etes pas abonne a cette zone pour la période cible")
         loop = True
@@ -131,7 +141,7 @@ def reserver_place(cur, client):
             print("[2] - Ne rien faire")
             choix = input("Entrez votre choix : ")
             if choix == "1":
-                acheter_abonnement(cur, client, zone,type_caisse)
+                abonnement.acheter_abonnement(cur, client, zone,type_caisse)
             elif choix == "2":
                 loop = False
-                menu_client(cur, conn, login)
+                menu.menu_client(cur, client)
