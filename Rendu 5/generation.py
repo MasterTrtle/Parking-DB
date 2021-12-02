@@ -3,7 +3,16 @@ import datetime
 import psycopg2
 import random
 from random_username.generate import generate_username
+import abonnement
 
+def input_date(message):
+    print(message)
+    a = int(input("annee ?"))
+    m = int(input("mois ?"))
+    j = int(input("jour ?"))
+    x = datetime.datetime(a,m,j)
+    x = x.strftime("%Y-%m-%d")
+    return x
 
 def rand_type_vehicule():
     type_vehicule = ['deux roues', 'camion', 'vehicule simple']
@@ -44,11 +53,15 @@ def get_zone(cur, parking):
     return cur.fetchone()[0]
 
 
-def get_prix(cur, cible, parking):  # cible = tarif_ticket || tarif_abonnement
+def get_prix_parking(cur, cible, parking):  # cible = tarif_ticket || tarif_abonnement
     sql = f"select {cible} from zone where nom = '{get_zone(cur, parking)}';"
     cur.execute(sql)
     return cur.fetchone()[0]
 
+def get_prix_zone(cur, cible, zone): # # cible = tarif_ticket || tarif_abonnement
+    sql = f"select {cible} from zone where nom = '{zone}';"
+    cur.execute(sql)
+    return cur.fetchone()[0]
 
 def select_place(cur, id_parking, type_place, type_vehicule):
     sql = f"select numero from place where id_parking = {id_parking} AND type_place = '{type_place}' AND type_vehicule = '{type_vehicule}'"
@@ -66,7 +79,7 @@ def create_ticket(cur, id_client, type_vehicule, type_place, id_parking, type_ca
     if id_place is None:
         print(f"impossible de reserver une place {type_place} pour un {type_vehicule} dans le parking {id_parking}")
     else:
-        prix = get_prix(cur, 'tarif_ticket', id_parking)
+        prix = get_prix_parking(cur, 'tarif_ticket', id_parking)
         id_paiement = nouveau_paiement(cur, prix, type_caisse, id_client)
         todays_date = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
         sql = f"Insert into ticket(id_transaction,id_ticket,id_place,type_vehicule,type_place,debut,id_parking) values({id_paiement},DEFAULT,{id_place},'{type_vehicule}','{type_place}','{todays_date}',{id_parking});"
@@ -83,7 +96,7 @@ def generate_ticket(cur):
         create_ticket(cur, id_client, rand_type_vehicule(), rand_type_place(), id_parking, rand_type_caisse())
 
 
-def create_abo(cur, nom, prenom, naissance):
+def create_abonne(cur, nom, prenom, naissance):
     sql = "INSERT into Client(id_client) values (DEFAULT) RETURNING id_client;"
     cur.execute(sql)
     id = cur.fetchone()[0]
@@ -101,6 +114,14 @@ def insert_random_occasionel(cur, nombre):
         cur.execute(sql)
 
 
+def create_compte_client(cur,login,mail,mdp,id_abonne):
+    sql = f"INSERT INTO compte(login,mail,mdp,abonne) values ('{login}','{mail}','{mdp}','{id_abonne}');"
+    cur.execute(sql)
+
+def create_compte_employe(cur,login,mail,mdp,id_employe):
+    sql = f"INSERT INTO compte(login,mail,mdp,employe) values ('{login}','{mail}','{mdp}','{id_employe}');"
+    cur.execute(sql)
+
 def create_account_random(cur, cible, id):
     fake = Faker()
     login = generate_username()[0]
@@ -108,10 +129,9 @@ def create_account_random(cur, cible, id):
     # sql = ""#verifier unicité mail
     mdp = fake.password(10)
     if cible == "employe":
-        sql = f"INSERT INTO compte(login,mail,mdp,employe) values ('{login}','{mail}','{mdp}','{id}');"
+        create_compte_employe(cur, login, mail, mdp, id)
     else:
-        sql = f"INSERT INTO compte(login,mail,mdp,abonne) values ('{login}','{mail}','{mdp}','{id}');"
-    cur.execute(sql)
+        create_compte_client(cur, login, mail, mdp, id)
 
 
 def create_zone(cur):
@@ -157,7 +177,7 @@ def insert_random_abo(cur, nombre):
         debut = datetime.date(datetime.datetime.now().year - 80, 1, 1)
         fin = datetime.date(datetime.datetime.now().year - 18, 8, 15)  # etre majeur
         naissance = fake.date_between_dates(debut, fin)
-        create_abo(cur, nom, prenom, naissance)
+        create_abonne(cur, nom, prenom, naissance)
 
 
 def create_employe(cur, numSecu):
@@ -191,10 +211,10 @@ def generate_vehicule_all_clients(cur):
 
 def remplir_bdd(cur):
     create_zone(cur)
-    generate_parking(cur, 10)
-    generate_places(cur, 20)
-    insert_random_abo(cur, 10)
-    insert_random_occasionel(cur, 20)
-    insert_random_employe(cur, 5)
+    generate_parking(cur, 5)
+    generate_places(cur, 10)
+    insert_random_abo(cur, 5)
+    insert_random_occasionel(cur, 5)
+    insert_random_employe(cur, 1)
     generate_vehicule_all_clients(cur)
-    generate_ticket(cur)
+    #generate_ticket(cur)
