@@ -27,8 +27,8 @@ CREATE TABLE Client(
 CREATE TABLE Vehicule(
     immat varchar(40) primary key,
     type_vehicule type_vehicule not null,
-    propriétaire int not null,
-    foreign key (propriétaire) references Client(id_client) on delete cascade
+    proprietaire int not null,
+    foreign key (proprietaire) references Client(id_client) on delete cascade
 );
 
 CREATE TABLE Paiement(

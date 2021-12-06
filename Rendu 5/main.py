@@ -8,8 +8,7 @@ if __name__ == '__main__':
     cur.execute(open("createdb.sql", "r").read())
     conn.commit()
 
-    generation.remplir_bdd(cur)
-    conn.commit()
+    generation.remplir_bdd(cur, conn)
     print("Bienvenue chez Auto-loc, votre location auto-instantanée")
     print("Que voulez-vous faire ?")
     print("   1. Se connecter")
@@ -36,12 +35,12 @@ if __name__ == '__main__':
                 if raw[0] == password:
                     if raw[1]:
                         employe = 1
-                        loop="false"
-                        menu.menu_employe(cur,login)
+                        loop = "false"
+                        menu.menu_employe(cur, login)
                     else:
                         employe = 0
-                        loop="false"
-                        menu.menu_client(cur,login)
+                        loop = "false"
+                        menu.menu_client(cur, login)
                 else:
                     print("Mauvais mot de passe\nVeuillez vous reconnecter\n")
                     # retour menu
@@ -49,7 +48,7 @@ if __name__ == '__main__':
                 print("Login inconnu\nVeuillez vous reconnecter\n")
 
     else:
-        #creer un compte
+        # creer un compte
         loop = "true"
         while loop == "true":
             login = input("Quel login voulez-vous ? ")
@@ -66,7 +65,7 @@ if __name__ == '__main__':
                 mail = input("Quelle est votre adresse mail ? ")
                 employe = int(input("Êtes-vous employé ?\n 0-Oui\n 1-Non\n"))
                 if employe == 0:
-                    #employe
+                    # employe
                     secu = int(input("Quel est votre numero de sécurité sociale\n"))
                     sql = "select * from employe"
                     cur.execute(sql)
