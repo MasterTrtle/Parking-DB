@@ -14,7 +14,10 @@ def Nombre_Abonnements_Zone(cur):
     cur.execute(sql_zone)
     raw = cur.fetchone()
     while raw:
-        print("Dans la zone" + str(raw[0]) + ", il y a " + raw[1] + " abonnements")
+        print("\n Dans la zone :")
+        print (str(raw[0]))
+        print (" Nombre d'abonnements :" )
+        print (str(raw[1]))
         raw = cur.fetchone()
 
 
@@ -24,5 +27,8 @@ def Nombre_Parkings_Zone(cur):
     cur.execute(sql_zone)
     raw = cur.fetchone()
     while raw:
-        print("Dans la zone" + str(raw[0]) + ", il y a " + raw[1] + " parkings")
+        print("\n Dans la zone :")
+        print (str(raw[0]))
+        print (" Nombre de parkings :" )
+        print (str(raw[1]))
         raw = cur.fetchone()
