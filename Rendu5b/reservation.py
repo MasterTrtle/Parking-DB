@@ -47,7 +47,7 @@ def selectionnerParking(cur):
 def reserver_place_cible(cur, debut, fin, idvehicule, client, idParking, zone, idPlace):
     sql = "INSERT into Reservation values ('%s','%s','%s','%s','%s','%s','%s')"%(debut, fin, idvehicule, client, idParking, zone, idPlace)
     cur.execute(sql)
-
+    print("Reservation réussie")
 
 def check_abonnement_valide(cur, client, zone, debut, fin):
     sql = "SELECT a.zone, a.debut, a.fin FROM abonnement a WHERE a.abonne='%s';"%client
@@ -62,9 +62,10 @@ def check_abonnement_valide(cur, client, zone, debut, fin):
     return flag
 
 
-def reserver_place(cur, client):
+def reserver_place(cur,client,conn):
     cur.execute("select abonne from compte where login='%s';" % client)
-    vehicule = selectionnerVehicule(cur,cur.fetchone())
+    idclient = cur.fetchone()
+    vehicule = selectionnerVehicule(cur,idclient[0])
     idvehicule = vehicule[0]
     typevehicule = vehicule[1]
     debut = datetime.date(int(input("Année de Début")),int(input("Mois de début")),int(input("Jour de début")))
@@ -82,7 +83,11 @@ def reserver_place(cur, client):
             while est_Reserve(cur, idPlace[0], idParking, debut, fin, typevehicule):
                 idPlace = cur.fetchone()
                 if idPlace is None:print("Il n'y a plus de place libre pour ce vehicule dans le parking");return
-            reserver_place_cible(cur, debut, fin, idvehicule, client, idParking, zone, idPlace)
+            try:
+                reserver_place_cible(cur, debut, fin, idvehicule, idclient[0], idParking, zone, idPlace[0])
+            except Exception as error:
+                print("Erreur :",error);return;
+            conn.commit()
     else:
         print("vous n'etes pas abonne a cette zone")
         loop = 'true'

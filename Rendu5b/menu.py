@@ -56,7 +56,7 @@ def menu_client(cur,conn,login):
         choix=input("Entrez votre choix : ")
         if choix=='1' :
             loop='false'
-            reservation.reserver_place(cur,login)
+            reservation.reserver_place(cur,login,conn)
             loop='true'
         elif choix=='2' :
             loop='false'

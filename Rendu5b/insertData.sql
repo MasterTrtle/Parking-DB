@@ -95,7 +95,7 @@ insert into employe values ('7145986');
 insert into employe values ('2403210');
 insert into employe values ('7102503');
 
-insert into reservation values ('1','2021-11-15','2021-11-16','111','1','1','Centre-ville','2');
+insert into reservation values ('2021-11-15','2021-11-16','111','1','1','Centre-ville','2','0');
 
 
 insert into compte values ('a','randomail@utc.fr','b',NULL,'2');
