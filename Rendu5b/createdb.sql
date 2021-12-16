@@ -65,7 +65,6 @@ CREATE TABLE Place(
 );
 
 CREATE TABLE Reservation(
-    id_reservation serial primary key,
     debut date not null,
     fin date not null,
     vehicule int not null,
@@ -73,6 +72,7 @@ CREATE TABLE Reservation(
     parking_place int not null,
     zone_parking_place varchar(20) not null,
     numero_place int not null,
+    id_reservation serial primary key,
     foreign key (vehicule) references vehicule(immat) on delete cascade,
     foreign key (client) references client(id_client) on delete cascade,
     foreign key (parking_place,zone_parking_place,numero_place) references place(id_parking,zone_parking,numero) on delete cascade,

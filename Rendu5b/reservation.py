@@ -45,7 +45,7 @@ def selectionnerParking(cur):
 
 
 def reserver_place_cible(cur, debut, fin, idvehicule, client, idParking, zone, idPlace):
-    sql = "INSERT into Reservation values ('','%s','%s','%s','%s','%s','%s','%s')"%(debut, fin, idvehicule, client, idParking, zone, idPlace)
+    sql = "INSERT into Reservation values ('%s','%s','%s','%s','%s','%s','%s')"%(debut, fin, idvehicule, client, idParking, zone, idPlace)
     cur.execute(sql)
 
 
