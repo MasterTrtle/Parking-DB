@@ -1,10 +1,11 @@
 #fonction pour consulter son solde de fidélité
-def Solde_Fidelite(cur, idabonne):  #entrer l'id de l'utilisateur courant en paramètre
-    sql = "SELECT points_fidelite FROM Abonne WHERE id_client = idabonne;"
+def Solde_Fidelite(cur, login):  #entrer l'id de l'utilisateur courant en paramètre
+    sql = "SELECT Abonne.points_fidelite FROM Abonne, Compte WHERE Compte.login = '%s' and Compte.abonne = id_client;"%(login)
     cur.execute(sql)
-    print(" Votre solde de fidélité est ")
+    print(" \n Votre solde de fidélité est \n ")
     raw = cur.fetchone()
     print (str(raw[0]))
+
 
 
 #voir le nombre d'abonnements par zone

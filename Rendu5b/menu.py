@@ -1,5 +1,6 @@
 import zone
 import reservation
+import statistiques
 
 def menu_employe(cur,conn,login):
     print("---Bienvenue dans l'espace employé---")
@@ -49,7 +50,7 @@ def menu_client(cur,conn,login):
             loop='true'
         elif choix=='2' :
             loop='false'
-            statistiques.Solde_Fidelite(cur, idabonne)
+            statistiques.Solde_Fidelite(cur, login)
             loop='true'
         elif choix=='3' :
             loop='false'
