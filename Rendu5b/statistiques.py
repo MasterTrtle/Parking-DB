@@ -33,9 +33,8 @@ def Nombre_Parkings_Zone(cur):
         print (str(raw[1]))
         raw = cur.fetchone()
 
-
-# Nombre de places prises par des abonnements pour un parking et un type de véhicule donné
-def Nombre_Places_Abonnements(cur):
+#Nombre de Places sur un parking donné pour un type de véhicule
+def NbPlaces_Parking_Vehicule(cur):
     parking= int(input("Entrez 1 pour Mairie, 2 pour Chateau, 3 pour Usine, 4 pour Centrale, 5 pour Magasin, 6 pour Capitole "))  #id du parking associé est mise
     choixt=input("Entrez 1 pour vehicule simple, 2 pour camion, 3 pour deux roues ")
     if choixt=='1' :
@@ -54,27 +53,21 @@ def Nombre_Places_Abonnements(cur):
     print (str(raw[0]))
     nb=str(raw[0])
     raw = cur.fetchone()
-    #voir comment savoir cb d'abonnés sont sur un parking
 
-
-# Nombre de places prises par des occasionnels pour un parking et un type de véhicule donné
-def Nombre_Places_Occasionnels(cur):
-    parking= int(input("Entrez 1 pour Mairie, 2 pour Chateau, 3 pour Usine, 4 pour Centrale, 5 pour Magasin, 6 pour Capitole "))  #id du parking associé est mise
-    choixt=input("Entrez 1 pour vehicule simple, 2 pour camion, 3 pour deux roues ")
-    if choixt=='1' :
-        typeDuvehicule= 'vehicule simple'
-    elif choixt=='2' :
-        typeDuvehicule= 'camion'
-    elif choixt=='3' :
-        typeDuvehicule= 'deux roues'
-    elif choixt :
-        return
-
-    sql  = "SELECT Count(*) FROM Place  WHERE id_parking = '%s' and type_vehicule = '%s';"%(parking, typeDuvehicule)
+# Voir nb de paiement pour chaque type
+def Nombre_Paiements(cur):
+    sql  = "SELECT Count (type_caisse), type_caisse FROM Paiement GROUP BY type_caisse;"
     cur.execute(sql)
     raw = cur.fetchone()
-    print("\n Nombre de places disponible dans ce parking pour tel type de véhicules :")
-    print (str(raw[0]))
-    nb=str(raw[0])
+    while raw:
+        print("\n Il y a ", str(raw[0]), "paiements avec", str(raw[1]))
+        raw = cur.fetchone()
+
+# Voir le nombre de clients abonnés et occasionnels
+def Nombre_declients(cur):
+    sql  = "SELECT Count (Abonne.id_client), Count (Occasionnel.id_client) FROM Abonne, Occasionnel;"
+    cur.execute(sql)
     raw = cur.fetchone()
-    #voir comment savoir cb d'abonnés sont sur un parking
+    while raw:
+        print("\n Il y a ", str(raw[0]), "abonnés qui utilisent ce service et ", str(raw[1]), "occasionnels")
+        raw = cur.fetchone()

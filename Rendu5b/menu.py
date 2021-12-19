@@ -12,9 +12,10 @@ def menu_employe(cur,conn,login):
         print("[2] - Changer le tarif d'une zone")
         print("[3] - Voir le nombre d'abonnements par zone")
         print("[4] - Voir le nombre de parkings par zone")
-        print("[5] - Voir le nombre de places prises par des abonnements pour un parking et un type de véhicule donné")
-        print("[6] - Voir le nombre de places prises par des occasionnels pour un parking et un type de véhicule donné")
-        print("[7] - Terminer")
+        print("[5] - Nombre de Places sur un parking donné pour un type de véhicule")
+        print("[6] - Voir nb de paiement pour chaque type")
+        print("[7] - Voir le nombre de clients abonnés et occasionnels")
+        print("[8] - Terminer")
         choix=input("Entrez votre choix : ")
         if choix=='1' :
             loop='false'
@@ -34,13 +35,17 @@ def menu_employe(cur,conn,login):
             loop='true'
         elif choix=='5' :
             loop='false'
-            statistiques.Nombre_Places_Abonnements(cur)
+            statistiques.NbPlaces_Parking_Vehicule(cur)
             loop='true'
         elif choix=='6' :
             loop='false'
-            statistiques.Nombre_Places_Occasionnels(cur)
+            statistiques.Nombre_Paiements(cur)
             loop='true'
         elif choix=='7' :
+            loop='false'
+            statistiques.Nombre_declients(cur)
+            loop='true'
+        elif choix=='8' :
             return
 
 def menu_client(cur,conn,login):
