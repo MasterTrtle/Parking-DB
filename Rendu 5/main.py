@@ -1,3 +1,5 @@
+import login as login
+
 import connect
 import menu
 import generation
@@ -29,18 +31,19 @@ if __name__ == '__main__':
                 raw = cur.fetchone()
             if login_valide:
                 password = input("Quel est votre mot de passe ? ")
-                sql = "select mdp,employe from compte where login='%s'" % login
+                sql = "select mdp,employe, abonne from compte where login='%s'" % login
                 cur.execute(sql)
                 raw = cur.fetchone()
                 if raw[0] == password:
                     if raw[1]:
                         employe = 1
                         loop = "false"
-                        menu.menu_employe(cur, login)
+                        menu.menu_employe(cur, raw[1])
                     else:
                         employe = 0
                         loop = "false"
-                        menu.menu_client(cur, login)
+                        print(raw[2])
+                        menu.menu_client(cur, raw[2])
                 else:
                     print("Mauvais mot de passe\nVeuillez vous reconnecter\n")
                     # retour menu
