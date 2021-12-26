@@ -4,7 +4,6 @@ import psycopg2
 import random
 from random_username.generate import generate_username
 import abonnement
-import reservation
 
 
 def input_date(message):

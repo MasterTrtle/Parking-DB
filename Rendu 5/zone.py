@@ -19,7 +19,7 @@ def afficher_parkings(cur) :
         row=cur.fetchone()        
     
 #Modifier le tarif d'une zone (Possibilité de modifier abo/ticket ou les deux)
-def changer_tarif_zone(cur,conn):
+def changer_tarif_zone(cur):
     print("\n--- Modifier le tarif d'une zone---")
     
     #Afficher l'état actuel de la table zone
@@ -54,7 +54,6 @@ def changer_tarif_zone(cur,conn):
                 print("/!\ La requête a échoué. Veuillez vérifier que la zone saisie existe.")
                 return
             print('* Modification effectuée !')
-            conn.commit()
             return
         
         elif choix=='2' :
@@ -69,7 +68,6 @@ def changer_tarif_zone(cur,conn):
                 print("/!\ La requête a échoué. Veuillez vérifier que la zone saisie existe.")
                 return
             print('* Modification effectuée !')
-            conn.commit()
             return
         
         elif choix=='3' :
@@ -90,13 +88,12 @@ def changer_tarif_zone(cur,conn):
                 print("/!\ La requête a échoué. Veuillez vérifier que la zone saisie existe.")
                 return
             print('* Modification effectuée !')
-            conn.commit()
             return
         
         elif choix=='4' :
             return
     
-def changer_zone_parking(cur,conn):
+def changer_zone_parking(cur):
     print("\n--- Modifier la zone d'un parking---")
     
     #Afficher l'état actuel de la table parking
@@ -125,7 +122,6 @@ def changer_zone_parking(cur,conn):
         print("/!\ La requête a échoué. Veuillez vérifier que le parking et la zone saisis existent.")
         return
     print('* Modification effectuée !')
-    conn.commit()
     return
     
     

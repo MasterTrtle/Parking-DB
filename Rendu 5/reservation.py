@@ -164,3 +164,27 @@ def reserver_place(cur, client,conn):
                 loop = False
                 menu.menu_client(cur, client)
     return menu.menu_client(cur, client)
+
+
+def sortie_parking(cur):
+    print("\n--- Signaler une sortie de véhicule---")
+    
+    #Indiquer la plaque du véhicule sortant
+    try :
+        immat=str(input("Entrez la plaque d'immatriculation du véhicule sortant : "))
+    except ValueError :
+        print("Valeur entrée incorrecte")
+        immat=str(input("Entrez la plaque d'immatriculation du véhicule sortant : "))
+        
+    now = datetime.now()
+    sql= "UPDATE Reservation SET fin='%s' WHERE vehicule='%s' AND fin IS NULL;"%(now,immat)
+    cur.execute(sql)
+    if cur.rowcount==0:
+        sql= "UPDATE Ticket SET fin='%s' WHERE immat='%s' AND fin IS NULL;"%(now,immat)
+        cur.execute(sql)
+        if cur.rowcount==0:
+            print("/!\ La requête a échoué. Veuillez vérifier que la plaque est correcte.")
+            return
+    print('* Modification effectuée !')
+    return
+    

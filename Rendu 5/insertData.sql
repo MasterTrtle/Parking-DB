@@ -80,13 +80,15 @@ insert into employe values (DEFAULT,'2403210');
 insert into employe values (DEFAULT,'7102503');
 
 insert into reservation values (DEFAULT,'2021-11-15','2021-11-16','11tger2','1','1','2');
+insert into reservation values (DEFAULT,'2021-11-25',NULL,'11tger2','1','1','2');
 
 insert into compte values ('a', 'randomail@utc.fr', 'b', NULL, '2');
 insert into compte values ('employe','randomail@societe.fr','e','1',NULL);
 
-insert into Ticket values ('1',DEFAULT,'1','2','2021-11-13','2021-11-14');
-insert into Ticket values ('3',DEFAULT,'2','1','2021-11-13','2021-11-14');
-insert into Ticket values ('5',DEFAULT,'4','1','2021-11-13','2021-11-14');
+insert into Ticket values ('1',DEFAULT,'1','2','11tger2','2021-11-13','2021-11-14');
+insert into Ticket values ('3',DEFAULT,'2','1','54d113','2021-11-13','2021-11-14');
+insert into Ticket values ('5',DEFAULT,'4','1','8eg52','2021-11-13','2021-11-14');
+insert into Ticket values (NULL,DEFAULT,'4','1','1gre19','2021-11-13',NULL);
 
 insert into abonnement values ('2',DEFAULT,'2021-11-26','2021-11-25','1','Industriel');
 insert into abonnement values ('4',DEFAULT,'2023-10-08','2025-10-08','2','Centre-ville');
