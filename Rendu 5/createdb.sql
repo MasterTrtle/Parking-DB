@@ -28,7 +28,7 @@ CREATE TABLE Vehicule(
     immat varchar(40) primary key,
     type_vehicule type_vehicule not null,
     proprietaire int not null,
-    foreign key (proprietaire) references Client(id_client) on delete cascade
+    foreign key (proprietaire) references Client(id_client) on delete cascade on update cascade
 );
 
 CREATE TABLE Paiement(
@@ -36,7 +36,7 @@ CREATE TABLE Paiement(
     montant int not null,
     type_caisse type_caisse not null,
     client int not null,
-    foreign key (client) references Client(id_client) on delete cascade
+    foreign key (client) references Client(id_client) on delete cascade on update cascade
 );
 
 CREATE TABLE Zone(
@@ -50,7 +50,7 @@ CREATE TABLE Parking(
     zone varchar(40),
     nom varchar(40) unique not null,
     adresse varchar(100) unique not null,
-    foreign key (zone) references zone(nom) on delete cascade
+    foreign key (zone) references zone(nom) on delete cascade on update cascade
 );
 
 CREATE TABLE Place(
@@ -59,19 +59,19 @@ CREATE TABLE Place(
     type_vehicule type_vehicule not null,
     type_place type_place not null,
     primary key (id_parking,numero),
-    foreign key (id_parking) references parking(id_parking) on delete cascade
+    foreign key (id_parking) references parking(id_parking) on delete cascade on update cascade
 );
 
 CREATE TABLE Reservation(
     id_reservation serial primary key,
     debut date not null,
-    fin date not null,
+    fin date,
     vehicule varchar(40) not null,
     client int not null,
     parking_place int not null,
     numero_place int not null,
-    foreign key (vehicule) references vehicule(immat) on delete cascade,
-    foreign key (client) references client(id_client) on delete cascade,
+    foreign key (vehicule) references vehicule(immat) on delete cascade on update cascade,
+    foreign key (client) references client(id_client) on delete cascade on update cascade,
     foreign key (parking_place,numero_place) references place(id_parking,numero) on delete cascade,
 
 
@@ -89,7 +89,7 @@ CREATE TABLE Employe(
 
 CREATE TABLE Occasionnel(
     id_client int primary key,
-    foreign key (id_client) references client(id_client) on delete cascade
+    foreign key (id_client) references client(id_client) on delete cascade on update cascade
 );
 
 CREATE TABLE Abonne(
@@ -98,7 +98,7 @@ CREATE TABLE Abonne(
     nom varchar(40) not null,
     prenom varchar(40) not null,
     date_naiss date not null,
-    foreign key (id_client) references client(id_client) on delete cascade,
+    foreign key (id_client) references client(id_client) on delete cascade on update cascade,
     check ((date_part('year', NOW()::timestamp )-date_part('year', date_naiss::timestamp ))>=18)
     );
 
@@ -108,8 +108,8 @@ CREATE TABLE Compte(
     mdp varchar(40) not null,
     employe int unique,
     abonne int unique,
-    foreign key (employe) references employe(id_employe) on delete cascade,
-    foreign key (abonne) references abonne(id_client) on delete cascade,
+    foreign key (employe) references employe(id_employe) on delete cascade on update cascade,
+    foreign key (abonne) references abonne(id_client) on delete cascade on update cascade,
     check ((employe IS NOT NULL and abonne is NULL) or (abonne is not null and employe is null))
 );
 
@@ -120,22 +120,21 @@ CREATE TABLE Abonnement(
     fin date not null,
     abonne int not null,
     zone varchar(40) not null,
-    foreign key (id_transaction) references paiement(id_transaction) on delete cascade,
-    foreign key (abonne) references abonne(id_client) on delete cascade,
+    foreign key (id_transaction) references paiement(id_transaction) on delete cascade on update cascade,
+    foreign key (abonne) references abonne(id_client) on delete cascade on update cascade,
     foreign key (zone) references zone(nom) on delete cascade
   ); -- check (DATEDIFF(month, debut, fin) > 0) si pas Mysql
 
 CREATE TABLE Ticket(
     id_transaction int primary key,
     id_ticket serial,
+    id_parking int not null,
     id_place int not null,
-    type_vehicule type_vehicule not null,
-    type_place type_place not null,
+    immat varchar(40) not null,
     debut date not null,
     fin date,
-    id_parking int not null,
-    foreign key (id_transaction) references paiement(id_transaction) on delete cascade,
-    foreign key (id_parking) references parking(id_parking) on delete cascade,
+    foreign key (id_transaction) references paiement(id_transaction) on delete cascade on update cascade,
+    foreign key (id_parking) references parking(id_parking) on delete cascade on update cascade,
 
     check (date_part('day', fin::timestamp) - date_part('day',debut::timestamp)>0 OR date_part('hour',fin::timestamp) - date_part('hour',debut::timestamp)>0)
     ); -- check (DATEDIFF(day or hour, debut, fin) > 0) si pas Mysql

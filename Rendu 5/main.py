@@ -1,5 +1,3 @@
-import login as login
-
 import connect
 import menu
 import generation
@@ -38,12 +36,12 @@ if __name__ == '__main__':
                     if raw[1]:
                         employe = 1
                         loop = "false"
-                        menu.menu_employe(cur, raw[1])
+                        menu.menu_employe(cur, raw[1],login)
                     else:
                         employe = 0
                         loop = "false"
                         print(raw[2])
-                        menu.menu_client(cur, raw[2])
+                        menu.menu_client(cur, raw[2],login)
                 else:
                     print("Mauvais mot de passe\nVeuillez vous reconnecter\n")
                     # retour menu
@@ -129,3 +127,4 @@ if __name__ == '__main__':
                         print("Le numero ne correspond pas à un client\nMerci de réessayer")
             else:
                 print("Login déjà utilisé\nMerci de ressaisir un nouveau login")
+    conn.commit()
