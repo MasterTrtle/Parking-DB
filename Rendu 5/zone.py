@@ -1,22 +1,4 @@
-#Affiche un tableau avec toutes les zones
-def afficher_zones(cur) :
-    sql="SELECT * FROM Zone ORDER BY nom;"
-    cur.execute(sql)
-    print(f"\n{'Zone':15s} {'Ticket':10s} {'Abonnement':10s}")
-    row=cur.fetchone()
-    while row :
-        print(f'{row[0]:15s} {row[1]:<10d} {row[2]:<10d}')
-        row=cur.fetchone()
-
-#Affiche un tableau avec tous les parkings
-def afficher_parkings(cur) :
-    sql="SELECT * FROM Parking ORDER BY zone;"
-    cur.execute(sql)
-    print(f"\n[{'ID':>3s}] {'Nom':10s} {'Zone':15s} {'Adresse':10s}")
-    row=cur.fetchone()
-    while row :
-        print(f'[{row[0]:>3d}] {row[2]:10s} {row[1]:15s} {row[3]:10s}')
-        row=cur.fetchone()        
+from affichage_input import afficher_parkings,afficher_zones 
     
 #Modifier le tarif d'une zone (Possibilité de modifier abo/ticket ou les deux)
 def changer_tarif_zone(cur):

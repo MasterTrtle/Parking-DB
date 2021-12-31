@@ -1,6 +1,7 @@
 import zone
 import reservation
 import statistiques
+import entree_sortie
 
 
 def menu_employe(cur,conn,login):
@@ -16,8 +17,9 @@ def menu_employe(cur,conn,login):
         print("[5] - Nombre de Places sur un parking donné pour un type de véhicule")
         print("[6] - Voir nb de paiement pour chaque type")
         print("[7] - Voir le nombre de clients abonnés et occasionnels")
-        print("[8] - Signaler la sortie d'un véhicule")
-        print("[9] - Terminer")
+        print("[8] - Signaler l'entrée d'un véhicule")
+        print("[9] - Signaler la sortie d'un véhicule")
+        print("[10] - Terminer")
         choix=input("Entrez votre choix : ")
         if choix=='1' :
             loop='false'
@@ -49,9 +51,13 @@ def menu_employe(cur,conn,login):
             loop='true'
         elif choix=='8' :
             loop='false'
-            reservation.sortie_parking(cur)
+            entree_sortie.entree_parking(cur)
             loop='true'
-        elif choix=='9' :   
+        elif choix=='9' :
+            loop='false'
+            entree_sortie.sortie_parking(cur)
+            loop='true'
+        elif choix=='10' :   
             return
 
 def menu_client(cur,conn,login):

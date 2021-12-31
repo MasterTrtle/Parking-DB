@@ -120,7 +120,6 @@ def reserver_place_abo(cur, client, debut, fin, inmat, idParking, typevehicule, 
         id_place = cur.fetchone()
     reserver_place_cible(cur, debut, fin, inmat, client, idParking, id_place[0])
 
-
 def reserver_place(cur, client,conn):
     type_caisse = 'internet'
     debut = input_date("entrez debut")
@@ -165,26 +164,3 @@ def reserver_place(cur, client,conn):
                 menu.menu_client(cur, client)
     return menu.menu_client(cur, client)
 
-
-def sortie_parking(cur):
-    print("\n--- Signaler une sortie de véhicule---")
-    
-    #Indiquer la plaque du véhicule sortant
-    try :
-        immat=str(input("Entrez la plaque d'immatriculation du véhicule sortant : "))
-    except ValueError :
-        print("Valeur entrée incorrecte")
-        immat=str(input("Entrez la plaque d'immatriculation du véhicule sortant : "))
-        
-    now = datetime.now()
-    sql= "UPDATE Reservation SET fin='%s' WHERE vehicule='%s' AND fin IS NULL;"%(now,immat)
-    cur.execute(sql)
-    if cur.rowcount==0:
-        sql= "UPDATE Ticket SET fin='%s' WHERE immat='%s' AND fin IS NULL;"%(now,immat)
-        cur.execute(sql)
-        if cur.rowcount==0:
-            print("/!\ La requête a échoué. Veuillez vérifier que la plaque est correcte.")
-            return
-    print('* Modification effectuée !')
-    return
-    

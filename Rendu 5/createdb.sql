@@ -126,8 +126,8 @@ CREATE TABLE Abonnement(
   ); -- check (DATEDIFF(month, debut, fin) > 0) si pas Mysql
 
 CREATE TABLE Ticket(
-    id_transaction int primary key,
-    id_ticket serial,
+    id_transaction int,
+    id_ticket serial primary key,
     id_parking int not null,
     id_place int not null,
     immat varchar(40) not null,
