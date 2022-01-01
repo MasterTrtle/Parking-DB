@@ -46,7 +46,7 @@ def create_abonnement(cur, debut, fin, client, zone, type_caisse):
     cur.execute(sql)
 
 
-def acheter_abonnement(cur, client, zone, type_caisse):
+def acheter_abonnement(cur, client, zone, type_caisse,conn):
     if check_occasionel_abonne(cur, client):
         print("Vous n'avez pas de compte abonner, necessaire pour acheter un abonnement")
         print("Voulez vous vous creer un compte ?")
@@ -56,8 +56,9 @@ def acheter_abonnement(cur, client, zone, type_caisse):
             print("[2] - Ne rien faire")
             choix = int(input())
             if choix == 1:
-                debut = input("entrez date debut")
-                fin = input('entrez date fin')
+                generation.convertion_occa_abo(cur, conn, client)
+                debut = generation.input_date("entrez date debut")
+                fin = generation.input_date('entrez date fin')
                 create_abonnement(cur, debut, fin, client, zone, type_caisse)
                 update_points(cur, client, generation.get_prix_zone(cur, 'tarif_abonnement', zone))
             elif choix == 2:

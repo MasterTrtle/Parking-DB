@@ -89,7 +89,7 @@ CREATE TABLE Employe(
 
 CREATE TABLE Occasionnel(
     id_client int primary key,
-    foreign key (id_client) references client(id_client) on delete cascade on update cascade
+    foreign key (id_client) references client(id_client) on update cascade
 );
 
 CREATE TABLE Abonne(

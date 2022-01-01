@@ -1,7 +1,6 @@
 import connect
 import menu
 import generation
-
 if __name__ == '__main__':
     conn = connect.get_connection()
     cur = conn.cursor()

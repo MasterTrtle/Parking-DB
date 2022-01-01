@@ -193,6 +193,40 @@ def create_employe(cur, numSecu):
     create_account_random(cur, 'employe', id)
 
 
+def convertion_occa_abo(cur,conn, id):
+    # creer un compte
+    loop = True
+    while loop:
+        login = input("Quel login voulez-vous ? ")
+        sql = "select login from compte"
+        cur.execute(sql)
+        raw = cur.fetchone()
+        login_valide = 1
+        while raw:
+            if raw[0] == login:
+                login_valide = 0
+            raw = cur.fetchone()
+        if login_valide:
+            password = input("Saisissez votre mot de passe : ")
+            mail = input("Quelle est votre adresse mail ? ")
+            nom = input('Quel est votre nom')
+            prenom = input('Quel est votre prenom')
+            naissance = input_date('Quel est votre date de naissance')
+
+            sql= f"delete from occasionnel where id_client = {id}"
+            cur.execute(sql)
+            sql = f"INSERT into Abonne values ('{id}','0','{nom}','{prenom}','{naissance}');"
+            cur.execute(sql)
+            create_compte_client(cur, login, mail, password, id)
+            conn.commit()
+            print("Compte créé")
+            loop = False
+        else:
+            print("login deja utilisé, choississez en un autre")
+
+
+
+
 def insert_random_employe(cur, nombre):
     for _ in range(nombre):
         numSecu = random.getrandbits(20)

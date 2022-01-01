@@ -1,21 +1,22 @@
 import abonnement
 import menu
-from generation import input_date
+from generation import input_date,convertion_occa_abo
 from datetime import datetime
 
 
-def est_Reserve(cur, idPlace, idParking, debut, fin):
-    # on on récupère l'ensemble des reservations(leur date) d'une place cible dans un parking'
+def est_Reserve(cur, idPlace, idParking, debut, fin): #renvoie True si réservation est possible (donc place pas occupé pour les dates cibles
+    # on on récupère l'ensemble des reservations(leur date) d'une place cible dans un parking
     sql = f"SELECT debut, fin FROM Reservation WHERE numero_place = {idPlace} AND  parking_place = {idParking}"
     cur.execute(sql)
     reservation = cur.fetchone()
-    if reservation is None:
+    if reservation is None: #aucune reservation
         return True
     flag = False
     while reservation:
-        if not (reservation[1] <= debut or fin <= reservation[0]):
-            flag = True
-            break
+        if reservation[1] is not None: # car si est null il y a actuellement un occupant
+            if not (reservation[1] <= debut or fin <= reservation[0]):
+                flag = True
+                break
         reservation = cur.fetchone()
     return flag
 
@@ -153,7 +154,7 @@ def reserver_place(cur, client,conn, login):
             print("[2] - Ne rien faire")
             choix = input("Entrez votre choix : ")
             if choix == "1":
-                abonnement.acheter_abonnement(cur, client, zone, type_caisse)
+                abonnement.acheter_abonnement(cur, client, zone, type_caisse,conn)
                 if check_abonnement_valide(cur, client, zone, debut, fin):
                     reserver_place_abo(cur, client, debut, fin, inmat, idParking, typevehicule, type_place)
                     try:
@@ -165,6 +166,5 @@ def reserver_place(cur, client,conn, login):
                     print("le nouveau abonnement n'est toujours pas valide")
             elif choix == "2":
                 loop = False
-                menu.menu_client(cur, client,)
+                menu.menu_client(cur,conn,client,login)
     return menu.menu_client(cur,conn, client, login)
-
