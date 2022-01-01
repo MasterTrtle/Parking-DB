@@ -120,7 +120,7 @@ def reserver_place_abo(cur, client, debut, fin, inmat, idParking, typevehicule, 
         id_place = cur.fetchone()
     reserver_place_cible(cur, debut, fin, inmat, client, idParking, id_place[0])
 
-def reserver_place(cur, client,conn):
+def reserver_place(cur, client,conn, login):
     type_caisse = 'internet'
     debut = input_date("entrez debut")
     fin = input_date("entrez fin")
@@ -156,11 +156,15 @@ def reserver_place(cur, client,conn):
                 abonnement.acheter_abonnement(cur, client, zone, type_caisse)
                 if check_abonnement_valide(cur, client, zone, debut, fin):
                     reserver_place_abo(cur, client, debut, fin, inmat, idParking, typevehicule, type_place)
+                    try:
+                        conn.commit()
+                    except ValueError:
+                        print("erreur lors de la reservation")
                     loop = False
                 else:
                     print("le nouveau abonnement n'est toujours pas valide")
             elif choix == "2":
                 loop = False
-                menu.menu_client(cur, client)
-    return menu.menu_client(cur, client)
+                menu.menu_client(cur, client,)
+    return menu.menu_client(cur,conn, client, login)
 

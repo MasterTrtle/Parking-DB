@@ -60,7 +60,7 @@ def menu_employe(cur,conn,login):
         elif choix=='10' :   
             return
 
-def menu_client(cur,conn,login):
+def menu_client(cur,conn,id,login):
     print("\n---Bienvenue dans votre espace client---")
     choix=0
     loop='true'
@@ -72,8 +72,8 @@ def menu_client(cur,conn,login):
         print("[4] - Terminer")
         choix=input("Entrez votre choix : ")
         if choix=='1' :
-            loop='false'
-            reservation.reserver_place(cur,login,conn)
+            loop = 'false'
+            reservation.reserver_place(cur,id,conn, login)
             loop='true'
         elif choix=='2' :
             loop='false'

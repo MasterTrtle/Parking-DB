@@ -5,7 +5,8 @@ import generation
 if __name__ == '__main__':
     conn = connect.get_connection()
     cur = conn.cursor()
-    #cur.execute(open("createdb.sql", "r").read())
+    cur.execute(open("createdb.sql", "r").read())
+    cur.execute(open("insertData.sql", "r").read())
     conn.commit()
 
     #generation.remplir_bdd(cur, conn)
@@ -40,8 +41,7 @@ if __name__ == '__main__':
                     else:
                         employe = 0
                         loop = "false"
-                        print(raw[2])
-                        menu.menu_client(cur, raw[2],login)
+                        menu.menu_client(cur, conn, raw[2],login)
                 else:
                     print("Mauvais mot de passe\nVeuillez vous reconnecter\n")
                     # retour menu
