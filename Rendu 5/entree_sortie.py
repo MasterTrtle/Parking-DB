@@ -1,5 +1,6 @@
 from datetime import datetime
 from affichage_input import input_id_parking,input_type_place,input_type_vehicule
+from paiement import calculer_montant,ajouter_paiement,afficher_paiements
 
 #######################################
 #------ Abonné dans ce parking? -----
@@ -21,7 +22,7 @@ def is_abonne_zone(cur,immat,id_parking):
 #-------- Place réservée ? --------
 #######################################
 def est_reservee(cur,id_parking,id_place):
-    now = datetime.now().date()
+    now = datetime.now()
     #On cherche la place dans la table des Réservations
     #Si on la trouve avec une fin nulle alors elle est réservée
     #Si on la trouve avec une fin après now alors elle est en cours ou réservée dans le futur
@@ -73,7 +74,7 @@ def entree_parking(cur):
     type_vehicule=input_type_vehicule()
     id_parking=input_id_parking(cur)
     id_client=is_abonne_zone(cur,immat,id_parking)
-    now = datetime.now().date()
+    now = datetime.now()
     id_place=trouver_place_libre(cur, id_parking, type_vehicule, type_place)
     if id_place==False:
         return
@@ -104,7 +105,7 @@ def sortie_parking(cur):
     
     immat=input("Entrez la plaque d'immatriculation du véhicule sortant : ")
     #On va essayer de trouver une réservation ou un ticket en cours pour le véhicule
-    now = datetime.now().date()
+    now = datetime.now()
     sql = "SELECT * FROM Reservation WHERE vehicule = '%s' AND fin IS NULL;"%(immat)
     cur.execute(sql)
     #Si on a un résultat alors le vehicule a une réservée
@@ -122,19 +123,19 @@ def sortie_parking(cur):
         cur.execute(sql)
         #Si on a un résultat alors le vehicule est un occasionel
         if cur.rowcount>0:
-            id_parking=cur.fetchone()[2]
+            row=cur.fetchone()
+            id_ticket=row[1]
+            id_parking=row[2]
             print("On a un résultat dans les tickets : le vehicule sort")
             sql= "UPDATE Ticket SET fin='%s' WHERE immat='%s' AND fin IS NULL;"%(now,immat)
             cur.execute(sql)
-            sql="SELECT tarif_ticket FROM Parking,Zone WHERE Parking.zone=Zone.nom AND Parking.id_parking='%s';"%(id_parking)
+            sql="SELECT zone FROM Parking WHERE id_parking='%s';"%(id_parking)
             cur.execute(sql)
-            print("Le tarif ticket dans la zone est :",cur.fetchone()[0],"€")
+            zone=cur.fetchone()[0]
+            print(calculer_montant(cur, zone, True, id_ticket))
             return
         else:
             print("/!\ La requête a échoué. Veuillez vérifier que la plaque est correcte.")
             return
     return
 
-
-if __name__ == '__main__':
-    test()

@@ -64,8 +64,8 @@ CREATE TABLE Place(
 
 CREATE TABLE Reservation(
     id_reservation serial primary key,
-    debut date not null,
-    fin date,
+    debut timestamp not null,
+    fin timestamp,
     vehicule varchar(40) not null,
     client int not null,
     parking_place int not null,
@@ -97,7 +97,7 @@ CREATE TABLE Abonne(
     points_fidelite int not null,
     nom varchar(40) not null,
     prenom varchar(40) not null,
-    date_naiss date not null,
+    date_naiss timestamp not null,
     foreign key (id_client) references client(id_client) on delete cascade on update cascade,
     check ((date_part('year', NOW()::timestamp )-date_part('year', date_naiss::timestamp ))>=18)
     );
@@ -116,8 +116,8 @@ CREATE TABLE Compte(
 CREATE TABLE Abonnement(
     id_transaction int primary key,
     id_carte serial unique not null,
-    debut date not null,
-    fin date not null,
+    debut timestamp not null,
+    fin timestamp not null,
     abonne int not null,
     zone varchar(40) not null,
     foreign key (id_transaction) references paiement(id_transaction) on delete cascade on update cascade,
@@ -131,8 +131,8 @@ CREATE TABLE Ticket(
     id_parking int not null,
     id_place int not null,
     immat varchar(40) not null,
-    debut date not null,
-    fin date,
+    debut timestamp not null,
+    fin timestamp,
     foreign key (id_transaction) references paiement(id_transaction) on delete cascade on update cascade,
     foreign key (id_parking) references parking(id_parking) on delete cascade on update cascade,
 
