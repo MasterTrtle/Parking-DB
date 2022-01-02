@@ -66,9 +66,9 @@ Insert into place values('6','1','vehicule simple','plein air');
 Insert into place values('6','2','camion','couverte');
 Insert into place values('6','3','deux roues','plein air');
 
-Insert into Paiement values(DEFAULT, '2', 'automate','1');
+Insert into Paiement values(DEFAULT, '2', 'automate','2');
 Insert into Paiement values(DEFAULT, '1', 'automate','4');
-Insert into Paiement values(DEFAULT, '5', 'internet','5');
+Insert into Paiement values(DEFAULT, '5', 'internet','2');
 Insert into Paiement values(DEFAULT, '6', 'automate','8');
 Insert into Paiement values(DEFAULT, '20', 'internet','6');
 Insert into Paiement values(DEFAULT, '12', 'automate','7');

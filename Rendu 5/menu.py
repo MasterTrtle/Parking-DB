@@ -2,6 +2,7 @@ import zone
 import reservation
 import statistiques
 import entree_sortie
+import paiement
 
 
 def menu_employe(cur,conn,login):
@@ -68,7 +69,7 @@ def menu_client(cur,conn,id,login):
         print("Que voulez-vous faire?")
         print("[1] - Reserver une place ")
         print("[2] - Consulter son solde de fidélité")
-        print("[3] - ")
+        print("[3] - Consulter ses paiements")
         print("[4] - Terminer")
         choix=input("Entrez votre choix : ")
         if choix=='1' :
@@ -81,7 +82,7 @@ def menu_client(cur,conn,id,login):
             loop='true'
         elif choix=='3' :
             loop='false'
-            #fonction
+            paiement.afficher_paiements(login ,cur)
             loop='true'
         elif choix=='4' :
             return
