@@ -129,10 +129,10 @@ def sortie_parking(cur):
             print("On a un résultat dans les tickets : le vehicule sort")
             sql= "UPDATE Ticket SET fin='%s' WHERE immat='%s' AND fin IS NULL;"%(now,immat)
             cur.execute(sql)
-            sql="SELECT zone FROM Parking WHERE id_parking='%s';"%(id_parking)
-            cur.execute(sql)
-            zone=cur.fetchone()[0]
-            print(calculer_montant(cur, zone, True, id_ticket))
+            #sql="SELECT zone FROM Parking WHERE id_parking='%s';"%(id_parking)
+            #cur.execute(sql)
+            #zone=cur.fetchone()[0]
+            #print(calculer_montant(cur, zone, True, id_ticket))
             return
         else:
             print("/!\ La requête a échoué. Veuillez vérifier que la plaque est correcte.")
