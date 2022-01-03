@@ -89,21 +89,16 @@ def reserver_place_cible(cur, debut, fin, inmat, client, idParking, idPlace):
     cur.execute(sql)
 
 
-def check_abonnement_valide(cur, client, zone, debut, fin):
-    debut = datetime.strptime(debut, "%Y-%m-%d")
-    debut = debut.date()
-    fin = datetime.strptime(fin, "%Y-%m-%d")
-    fin = fin.date()
+def check_abonnement_valide(cur, client, zone):
 
-    sql = f"SELECT a.zone, a.debut, a.fin FROM abonnement a WHERE a.abonne='{client}';"
+    sql = f"SELECT a.zone FROM abonnement a WHERE a.abonne='{client}';"
     cur.execute(sql)
     flag = False
     x = cur.fetchone()
     while x:
         if x[0] == zone:
-            if (x[1] <= debut) & (fin <= x[2]):
-                flag = True
-                break
+            flag = True
+            break
         x = cur.fetchone()
     return flag
 
@@ -142,7 +137,7 @@ def reserver_place(cur, client,conn, login):
     idParking = parking[0]
     zone = parking[1]
 
-    if check_abonnement_valide(cur, client, zone, debut, fin):
+    if check_abonnement_valide(cur, client, zone):
         reserver_place_abo(cur, client, debut, fin, inmat, idParking, typevehicule, type_place)
     else:
         print("vous n'etes pas abonne a cette zone pour la période cible")
@@ -155,7 +150,7 @@ def reserver_place(cur, client,conn, login):
             choix = input("Entrez votre choix : ")
             if choix == "1":
                 abonnement.acheter_abonnement(cur, client, zone, type_caisse,conn)
-                if check_abonnement_valide(cur, client, zone, debut, fin):
+                if check_abonnement_valide(cur, client, zone):
                     reserver_place_abo(cur, client, debut, fin, inmat, idParking, typevehicule, type_place)
                     try:
                         conn.commit()

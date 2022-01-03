@@ -36,7 +36,7 @@ if __name__ == '__main__':
                     if raw[1]:
                         employe = 1
                         loop = "false"
-                        menu.menu_employe(cur, raw[1],login)
+                        menu.menu_employe(cur,conn)
                     else:
                         employe = 0
                         loop = "false"

@@ -1,6 +1,8 @@
 import generation
 import menu
-from datetime import datetime
+import paiement
+from datetime import datetime, date
+
 
 
 def duree_mois(d1, d2):
@@ -36,10 +38,7 @@ def update_points(cur, abonne, point):
     cur.execute(sql)
 
 
-def create_abonnement(cur, debut, fin, client, zone, type_caisse):
-    duree = duree_mois(debut, fin)
-    prix = generation.get_prix_zone(cur, 'tarif_abonnement', zone) * duree
-    id_paiement = generation.nouveau_paiement(cur, prix, type_caisse, client)
+def create_abonnement(cur, debut, fin, client, zone,id_paiement):
     if check_occasionel_abonne(cur, client):
         transition_occasionel_abonne(cur, client)
     sql = f"insert into abonnement values({id_paiement}, Default, '{debut}', '{fin}',{client},'{zone}');"
@@ -48,7 +47,7 @@ def create_abonnement(cur, debut, fin, client, zone, type_caisse):
 
 def acheter_abonnement(cur, client, zone, type_caisse,conn):
     if check_occasionel_abonne(cur, client):
-        print("Vous n'avez pas de compte abonner, necessaire pour acheter un abonnement")
+        print("Vous n'avez pas de compte abonné, necessaire pour acheter un abonnement")
         print("Voulez vous vous creer un compte ?")
         flag = True
         while flag:
@@ -65,7 +64,14 @@ def acheter_abonnement(cur, client, zone, type_caisse,conn):
                 flag = False
                 menu.menu_client(cur, client)
     else:
-        debut = generation.input_date("entrez date debut")
-        fin = generation.input_date('entrez date fin')
-        create_abonnement(cur, debut, fin, client, zone, type_caisse)
-        update_points(cur, client, generation.get_prix_zone(cur, 'tarif_abonnement', zone))
+        debut = datetime.today()
+        fin = date(debut.year,debut.month+1,debut.day)
+        montant=paiement.calculer_montant(cur,zone,False,0)
+        print("Cela va vous couter : %s\n Voulez vous continuer ?\n[1] - OUI\n[2] - NON\n"%montant)
+        choix=int(input())
+        if choix==1:
+            id_paiement=paiement.ajouter_paiement(montant,'internet',client,cur,conn)
+            create_abonnement(cur, debut, fin, client, zone,id_paiement)
+            update_points(cur, client, generation.get_prix_zone(cur, 'tarif_abonnement', zone))
+        else:
+            print("Paiement annulé, retour au menu\n")

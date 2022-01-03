@@ -5,7 +5,7 @@ import entree_sortie
 import paiement
 
 
-def menu_employe(cur,conn,login):
+def menu_employe(cur,conn):
     print("---Bienvenue dans l'espace employé---")
     choix=0
     loop='true'
@@ -52,11 +52,11 @@ def menu_employe(cur,conn,login):
             loop='true'
         elif choix=='8' :
             loop='false'
-            entree_sortie.entree_parking(cur)
+            entree_sortie.entree_parking(cur,conn)
             loop='true'
         elif choix=='9' :
             loop='false'
-            entree_sortie.sortie_parking(cur)
+            entree_sortie.sortie_parking(cur,conn)
             loop='true'
         elif choix=='10' :   
             return

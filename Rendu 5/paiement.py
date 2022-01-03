@@ -8,19 +8,21 @@ def calculer_montant(cur,zone,ticket,id): #zone + booleen
         date=cur.fetchone()
         debut=date[0]
         fin=date[1]
-        FMT='%Y-%M-%D %H:%M:%S'
-        delta=datetime.strptime(debut,FMT) - datetime.strptime(fin,FMT)
-        return int(delta/3600000000)*int(tarif)
+        FMT="%Y-%m-%d %H:%M:%S"
+        delta=datetime.strptime(str(debut),FMT) - datetime.strptime(str(fin),FMT)
+        t=delta.microseconds/3600000000*tarif
+        print(t)
+        return t
     else:
         cur.execute("SELECT tarif_abonnement FROM Zone where nom='%s'"%zone)
-        tarif=cur.fetchone()
+        tarif=cur.fetchone()[0]
         return tarif
 
 def ajouter_paiement(montant,type_caisse,client,cur,conn):
     cur.execute("INSERT INTO paiement values (Default,'%s','%s','%s')"%(montant,type_caisse,client))
     conn.commit()
     cur.execute("SELECT id_transaction FROM paiement where client='%s'"%client)
-    return cur.fetchall()[-1]
+    return cur.fetchall()[-1][0]
 
 def afficher_paiements(login,cur):
     cur.execute("SELECT abonne from compte where login='%s'"%login)
