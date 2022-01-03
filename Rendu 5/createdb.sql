@@ -75,7 +75,7 @@ CREATE TABLE Reservation(
     foreign key (parking_place,numero_place) references place(id_parking,numero) on delete cascade,
 
 
-    check (date_part('day', fin::timestamp)-date_part('day',debut::timestamp)>0 OR date_part('hour',fin::timestamp) - date_part('hour',debut::timestamp)>0)
+    check (date_part('day', fin::timestamp)-date_part('day',debut::timestamp)>0 OR date_part('hour',fin::timestamp) - date_part('hour',debut::timestamp)>0 OR date_part('minute', fin::timestamp)-date_part('minute',debut::timestamp)>0)
 ); -- check (DATEDIFF(day or hour, debut, fin) > 0) si pas Mysql
    -- client = vehicule.client
    -- date ne se chevauchent pas
@@ -136,5 +136,5 @@ CREATE TABLE Ticket(
     foreign key (id_transaction) references paiement(id_transaction) on delete cascade on update cascade,
     foreign key (id_parking) references parking(id_parking) on delete cascade on update cascade,
 
-    check (date_part('day', fin::timestamp) - date_part('day',debut::timestamp)>0 OR date_part('hour',fin::timestamp) - date_part('hour',debut::timestamp)>0)
+    check (date_part('day', fin::timestamp) - date_part('day',debut::timestamp)>0 OR date_part('hour',fin::timestamp) - date_part('hour',debut::timestamp)>0 OR date_part('minute', fin::timestamp)-date_part('minute',debut::timestamp)>0)
     ); -- check (DATEDIFF(day or hour, debut, fin) > 0) si pas Mysql
