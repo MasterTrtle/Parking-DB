@@ -158,7 +158,7 @@ def sortie_parking(cur,conn):
             if choix == 1:
                 cur.execute("Select proprietaire from vehicule where immat='%s'"%immat)
                 client = cur.fetchone()[0]
-                id_paiement = ajouter_paiement(montant, 'internet', client, cur, conn)
+                id_paiement = ajouter_paiement(montant, 'guichet', client, cur, conn)
                 sql = "UPDATE Ticket SET id_transaction='%s' WHERE immat='%s' AND fin IS NULL;" % (id_paiement,immat)
                 cur.execute(sql)
                 conn.commit()
