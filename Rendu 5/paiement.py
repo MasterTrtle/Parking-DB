@@ -3,16 +3,15 @@ from datetime import datetime,timedelta
 def calculer_montant(cur,zone,ticket,id): #zone + booleen
     if ticket:
         cur.execute("SELECT tarif_ticket FROM Zone where nom='%s'"%zone)
-        tarif=cur.fetchone()
+        tarif=int(cur.fetchone()[0])
         cur.execute("SELECT debut,fin FROM Ticket where id_ticket='%s'"%id)
         date=cur.fetchone()
         debut=date[0]
         fin=date[1]
         FMT="%Y-%m-%d %H:%M:%S"
         delta=datetime.strptime(str(debut),FMT) - datetime.strptime(str(fin),FMT)
-        t=delta.microseconds/3600000000*tarif
-        print(t)
-        return t
+        t=int(delta.microseconds/3600000000)
+        return t*tarif if t>0 else tarif
     else:
         cur.execute("SELECT tarif_abonnement FROM Zone where nom='%s'"%zone)
         tarif=cur.fetchone()[0]
