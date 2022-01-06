@@ -1,5 +1,4 @@
 DROP TABLE IF EXISTS client CASCADE;
-DROP TABLE IF EXISTS vehicule CASCADE;
 DROP TABLE IF EXISTS paiement CASCADE;
 DROP TABLE IF EXISTS zone CASCADE;
 DROP TABLE IF EXISTS parking CASCADE;
@@ -11,10 +10,10 @@ DROP TABLE IF EXISTS compte CASCADE;
 DROP TABLE IF EXISTS abonnement CASCADE;
 DROP TABLE IF EXISTS ticket CASCADE;
 
-DROP TYPE IF EXISTS type_vehicule;
+
 DROP TYPE IF EXISTS type_caisse;
 
-CREATE TYPE type_vehicule AS ENUM ('deux roues', 'camion', 'vehicule simple');
+
 CREATE TYPE type_caisse AS ENUM ('guichet', 'automate', 'internet');
 
 
@@ -32,14 +31,10 @@ CREATE TABLE Parking(
 
 CREATE TABLE Client(
     id_client serial primary key
+    vehicule json
 );
+-- structure de vehicule {"immat" : valeur}, {"type de vehicule" : valeur}, 
 
-CREATE TABLE Vehicule(
-    immat varchar(40) primary key,
-    type_vehicule type_vehicule not null,
-    proprietaire int not null,
-    foreign key (proprietaire) references Client(id_client) on delete cascade on update cascade
-);
 
 CREATE TABLE Paiement(
     id_transaction serial primary key,
@@ -60,9 +55,7 @@ CREATE TABLE Reservation(
     id_reservation serial primary key,
     debut timestamp not null,
     fin timestamp,
-    vehicule varchar(40) not null,
     client int not null,
-    foreign key (vehicule) references vehicule(immat) on delete cascade on update cascade,
     foreign key (client) references client(id_client) on delete cascade on update cascade,
     check (date_part('day', fin::timestamp)-date_part('day',debut::timestamp)>0 OR date_part('hour',fin::timestamp) - date_part('hour',debut::timestamp)>0 OR date_part('minute', fin::timestamp)-date_part('minute',debut::timestamp)>0)
 );
