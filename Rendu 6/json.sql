@@ -23,9 +23,11 @@ CREATE TYPE type_caisse AS ENUM ('guichet', 'automate', 'internet');
 -- structure de place {"id_parking" : valeur}, {"numero" : valeur}, {"type_vehicule" : valeur}, {"type_place" : valeur}
 CREATE TABLE Parking(
     id_parking serial primary key,
-    zone json,
+    place json,
+    zone varchar(40),
     nom varchar(40) unique not null,
     adresse varchar(100) unique not null,
+    foreign key (zone) references zone(nom) on delete cascade on update cascade
 );
 
 CREATE TABLE Client(
@@ -60,13 +62,8 @@ CREATE TABLE Reservation(
     fin timestamp,
     vehicule varchar(40) not null,
     client int not null,
-    parking_place int not null,
-    numero_place int not null,
     foreign key (vehicule) references vehicule(immat) on delete cascade on update cascade,
     foreign key (client) references client(id_client) on delete cascade on update cascade,
-    foreign key (parking_place,numero_place) references place(id_parking,numero) on delete cascade,
-
-
     check (date_part('day', fin::timestamp)-date_part('day',debut::timestamp)>0 OR date_part('hour',fin::timestamp) - date_part('hour',debut::timestamp)>0 OR date_part('minute', fin::timestamp)-date_part('minute',debut::timestamp)>0)
 );
 
