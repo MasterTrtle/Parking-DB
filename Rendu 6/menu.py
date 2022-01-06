@@ -24,11 +24,11 @@ def menu_employe(cur,conn):
         choix=input("Entrez votre choix : ")
         if choix=='1' :
             loop='false'
-            zone.changer_zone_parking(cur,conn)
+            zone.changer_zone_parking(cur)
             loop='true'
         elif choix=='2' :
             loop='false'
-            zone.changer_tarif_zone(cur,conn)
+            zone.changer_tarif_zone(cur)
             loop='true'
         elif choix=='3' :
             loop='false'

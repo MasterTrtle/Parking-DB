@@ -9,7 +9,7 @@ if __name__ == '__main__':
     conn.commit()
 
     #generation.remplir_bdd(cur, conn)
-    print("Bienvenue chez Auto-loc, votre location auto-instantanée")
+    print("Bienvenue chez Park'Auto, votre gestionnaire de parkings")
     print("Que voulez-vous faire ?")
     print("   1. Se connecter")
     print("   2. Se créer un compte")
@@ -111,7 +111,7 @@ if __name__ == '__main__':
                         raw = cur.fetchone()
                         abonne = 0
                         while raw:
-                            if int(raw[0]) == num:
+                            if raw[0] is not None and int(raw[0]) == num:
                                 abonne = 1
                             raw = cur.fetchone()
                         if abonne == 0:
