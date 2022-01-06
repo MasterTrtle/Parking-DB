@@ -1,0 +1,170 @@
+
+db.Client.insert(
+    {"id_client" : 1}
+)
+db.Client.insert(
+    {"id_client" : 2}
+)
+db.Client.insert(
+    {"id_client" : 10}
+)
+
+
+db.vehicule.insert(
+    {"immat" : "11tger2"},
+    {"type_vehicule" : "camion"},
+    {"proprietaire" : {"id_client : 1"}}  //on ne peut plus faire de référence alors on doit inclure les informations du client
+)
+
+db.vehicule.insert(
+    {"immat" : "54d113"},
+    {"type_vehicule" : "deux roues"},
+    {"proprietaire" : {"id_client : 2"}}  //on ne peut plus faire de référence alors on doit inclure les informations du client
+)
+
+
+db.paiement.insert (
+    {"id" : 1},
+    {"montant" : 2},
+    {"type_caisse" : "automate"},
+    {"proprietaire" : {"id_client : 2"}}    //on ne peut plus faire de référence alors on doit inclure les informations du client
+)
+
+db.paiement.insert (
+    {"id" : 2},
+    {"montant" : 5},
+    {"type_caisse" : "internet"},
+    {"proprietaire" : {"id_client : 1"}}        // plus de référence alors on doit inclure les informations du   client
+)
+
+
+db.zone.insert (
+    {"nom" : "Centre-ville"},
+    {"tarif_ticket" : 2},
+    {"tarif_abonnement" : 15}
+)
+
+db.zone.insert (
+    {"nom" : "Industriel"},
+    {"tarif_ticket" : 1},
+    {"tarif_abonnement" : 5}
+)
+
+
+db.parking.insert (
+    {"id" : 1},
+    {"zone" : [ {"nom" : "Centre-ville"},        //plus de référence alors on doit inclure les informations de la zone
+                {"tarif_ticket" : 2},
+                {"tarif_abonnement" : 15}]},
+    {"nom" : "Mairie"},
+    {"adresse" : "1 place de la mairie,60200 Compiegne"}
+)
+
+db.parking.insert (
+    {"id" : 3},
+    {"zone" : [ {"nom" : "Industriel"},        //plus de référence alors on doit inclure les informations de la zone
+                {"tarif_ticket" : 1},
+                {"tarif_abonnement" : 5}]},
+    {"nom" : "Usine"},
+    {"adresse" : "12 avenue du général Leclerc,60200 Compiegne"}
+)
+
+
+db.place.insert (
+    {"id_parking" : {"id" : 1}},   //on ne peut plus faire de référence alors on doit inclure les informations du parking
+    {"numero" : 1}
+    {"type_vehicule" : "camion"},
+    {"type_place" : "couverte"}
+)
+
+db.place.insert (
+    {"id_parking" : {"id" : 3}},       //on ne peut plus faire de référence alors on doit inclure les informations du parking
+    {"numero" : 1}
+    {"type_vehicule" : "vehicule simple"},
+    {"type_place" : "plein air"}
+)
+
+
+db.reservation.insert (
+    {"id_reservation" : 1},
+    {"debut" : "2021-11-15"}
+    {"fin" : "2021-11-16"}
+    {"vehicule" : [{"immat" : "11tger2"},      //plus de référence alors on doit inclure les informations du véhicule
+                   {"type_vehicule" : "camion"},
+                   {"proprietaire" : {"id_client : 1"}}]},  //id client déjà précisé alors pas besoin de le remettre
+    {"place" : [{"id_parking" : {"id" : 1}},             //on reprécise ici toute les infos liées à la place
+                {"numero" : 1}
+                {"type_vehicule" : "camion"},
+                {"type_place" : "couverte"}]}
+)
+
+
+db.Employe.insert (
+    {"id_employe" : 1},
+    {"num_secu" : 1000359}
+)
+
+
+db.Occasionnel.insert (
+    {"id" : {"id_client" : 10}}        //on ne peut plus faire de référence alors on doit inclure les informations du client
+)
+
+
+db.Abonne.insert (
+    {"id" : {"id_client" : 1}},      //on ne peut plus faire de référence alors on doit inclure les informations du client
+    {"points_fidelite" : 13},
+    {"nom" : "Veil"},
+    {"prenom" : "Simone"},
+    {"date_naiss" : "1955-09-30"},
+)
+
+
+db.Compte.insert (
+    {"login" : "employe"},
+    {"mail" : "randomail@societe.fr"},
+    {"mdp" : "e"},
+    {"proprietaire" : [  {"id_employe" : 1},
+                         {"num_secu" : 1000359}]}     //plus de référence alors info du propriétaire qui est employé
+)
+
+
+db.Abonnement.insert (
+    {"transaction" : [ {"id" : 2},  //on ne peut plus faire de référence alors on doit inclure les informations de la transaction
+                       {"montant" : 5},
+                       {"type_caisse" : "internet"},
+                       {"proprietaire" : {"id_client : 1"}]},        
+//on ne peut plus faire de référence alors on doit inclure les informations du client, on a donc pas besoin de remettre l'id //// // client
+    {"id_carte" : 1},
+    {"debut" : "2021-11-26"},
+    {"fin" : "2021-11-25"},
+    { "zone" : [{"nom" : "Industriel"},                           
+//on ne peut plus faire de référence alors on doit inclure les informations de la zone
+              {"tarif_ticket" : 1},
+              {"tarif_abonnement" : 5}]}
+
+)
+
+db.Ticket.insert (
+   {"transaction" : [{"id" : 1},                                           
+//on ne peut plus faire de référence alors on doit inclure les informations de la transaction
+                     {"montant" : 2},
+                     {"type_caisse" : "automate"},
+                     {"proprietaire" : {"id_client : 2"}}]},
+   {"id_ticket" : 1},
+   {"parking" : [{"id" : 1},                                                
+//on ne peut plus faire de référence alors on doit inclure les informations du parking, qui contiennent celle de la zone
+                 {"zone" : [ {"nom" : "Centre-ville"},
+                             {"tarif_ticket" : 2},
+                             {"tarif_abonnement" : 15}]},
+                 {"nom" : "Mairie"},
+                 {"adresse" : "1 place de la mairie,60200 Compiegne"}]},
+  {"place" : [ {"numero" : 2},                                                 
+//on ne peut plus faire de référence alors on doit inclure les informations de la place
+               {"type_vehicule" : "deux roues"},
+               {"type_place" : "couverte"}]}
+  { "vehicule" :[{"immat" : "54d113"},
+                 {"type_vehicule" : "deux roues"},
+                 {"proprietaire" : {"id_client : 2"}}]},
+  {"debut" : "2021-11-26"},
+  {"fin" : "2021-11-28"},
+)
