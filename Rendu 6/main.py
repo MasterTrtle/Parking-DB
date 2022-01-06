@@ -1,9 +1,14 @@
 import connect
 import menu
-
+import generation
 if __name__ == '__main__':
     conn = connect.get_connection()
     cur = conn.cursor()
+    #cur.execute(open("createdb.sql", "r").read())
+    #cur.execute(open("insertData.sql", "r").read())
+    conn.commit()
+
+    #generation.remplir_bdd(cur, conn)
     print("Bienvenue chez Auto-loc, votre location auto-instantanée")
     print("Que voulez-vous faire ?")
     print("   1. Se connecter")
@@ -24,18 +29,18 @@ if __name__ == '__main__':
                 raw = cur.fetchone()
             if login_valide:
                 password = input("Quel est votre mot de passe ? ")
-                sql = "select mdp,employe from compte where login='%s'" % login
+                sql = "select mdp,employe, abonne from compte where login='%s'" % login
                 cur.execute(sql)
                 raw = cur.fetchone()
                 if raw[0] == password:
                     if raw[1]:
                         employe = 1
-                        loop="false"
-                        menu.menu_employe(cur,conn,login)
+                        loop = "false"
+                        menu.menu_employe(cur,conn)
                     else:
                         employe = 0
-                        loop="false"
-                        menu.menu_client(cur,conn,login)
+                        loop = "false"
+                        menu.menu_client(cur, conn, raw[2],login)
                 else:
                     print("Mauvais mot de passe\nVeuillez vous reconnecter\n")
                     # retour menu
@@ -43,7 +48,7 @@ if __name__ == '__main__':
                 print("Login inconnu\nVeuillez vous reconnecter\n")
 
     else:
-        #creer un compte
+        # creer un compte
         loop = "true"
         while loop == "true":
             login = input("Quel login voulez-vous ? ")
@@ -60,7 +65,7 @@ if __name__ == '__main__':
                 mail = input("Quelle est votre adresse mail ? ")
                 employe = int(input("Êtes-vous employé ?\n 0-Oui\n 1-Non\n"))
                 if employe == 0:
-                    #employe
+                    # employe
                     secu = int(input("Quel est votre numero de sécurité sociale\n"))
                     sql = "select * from employe"
                     cur.execute(sql)
@@ -121,3 +126,4 @@ if __name__ == '__main__':
                         print("Le numero ne correspond pas à un client\nMerci de réessayer")
             else:
                 print("Login déjà utilisé\nMerci de ressaisir un nouveau login")
+    conn.commit()

@@ -65,9 +65,11 @@ def Nombre_Paiements(cur):
 
 # Voir le nombre de clients abonnés et occasionnels
 def Nombre_declients(cur):
-    sql  = "SELECT Count (Abonne.id_client), Count (Occasionnel.id_client) FROM Abonne, Occasionnel;"
+    sql  = "SELECT Count (Abonne.id_client) FROM Abonne;"
     cur.execute(sql)
     raw = cur.fetchone()
-    while raw:
-        print("\n Il y a ", str(raw[0]), "abonnés qui utilisent ce service et ", str(raw[1]), "occasionnels")
-        raw = cur.fetchone()
+    print("\n Il y a ", str(raw[0]), "abonnés qui utilisent ce service ")
+    sql  = "SELECT Count (Occasionnel.id_client) FROM Occasionnel;"
+    cur.execute(sql)
+    raw = cur.fetchone()
+    print("\n Il y a ", str(raw[0]), "occasionnels qui utilisent ce service")
